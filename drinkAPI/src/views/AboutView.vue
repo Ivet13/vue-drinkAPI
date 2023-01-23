@@ -1,13 +1,11 @@
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
-
-    <div v-if="items != null" class="">
+      <div v-if="items != null" class="">
 
       <div v-for="item in items" :key="item" class="">
-      
-          {{ item.strDrink }}        
-      
+       <h1>{{ item.strDrink }} </h1>
+            
+        <img :src="`${item.strDrinkThumb}`" alt="`${item.strDrink}`">
       </div>
     </div>
   </div>
