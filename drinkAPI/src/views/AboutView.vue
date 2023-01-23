@@ -6,7 +6,7 @@
 
       <div v-for="item in items" :key="item" class="">
       
-          {{ item.idDrink }}        
+          {{ item.strDrink }}        
       
       </div>
     </div>
@@ -53,7 +53,7 @@ export default {
           }
           console.log('item found')
           console.log(data)
-          this.items = data;
+          this.items = data.drinks;
 
         })
         .catch(error => {
