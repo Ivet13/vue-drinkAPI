@@ -5,9 +5,9 @@
     <div v-if="items != null" class="">
 
       <div v-for="item in items" :key="item" class="">
-        <div class="">
+      
           {{ item.idDrink }}        
-        </div>
+      
       </div>
     </div>
   </div>
@@ -40,7 +40,7 @@ export default {
 
       };
 
-      fetch(`www.thecocktaildb.com/api/json/v1/1/random.php`, requestOptions)
+      fetch(`https://www.thecocktaildb.com/api/json/v1/1/random.php`, requestOptions)
         .then(async response => {
           const data = await response.json();
 
