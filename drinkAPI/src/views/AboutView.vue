@@ -1,14 +1,17 @@
 <template>
-  <div class="about">
-      <div v-if="items != null" class="">
-
-      <div v-for="item in items" :key="item" class="">
-       <h1>{{ item.strDrink }} </h1>
-            
-        <img :src="`${item.strDrinkThumb}`" alt="`${item.strDrink}`">
-      </div>
+  <main class="home">
+    <h1>Random drinks</h1>
+    <div v-if="items != null" class="">
+      <router-link 
+      v-for="item in items" 
+      :key="item.idDrink" 
+      :to="{name: 'item.show', params:{id:item.idDrink}}"
+      class="">
+        <h2>{{ item.strDrink }}</h2>
+        <img :src="`${item.strDrinkThumb}`" :alt="item.strDrink">
+      </router-link>
     </div>
-  </div>
+  </main>
 </template>
 
 <style>

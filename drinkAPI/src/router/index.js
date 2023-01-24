@@ -15,6 +15,13 @@ const routes = [
     // this generates a separate chunk (About.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import('../views/AboutView.vue')
+  },
+  {
+    path: "/:id",
+    name: "item.show",
+    component: () => import("../views/ItemShow.vue"),
+    props: route => ({ ...route.params, id: parseInt(route.params.id) }),
+
   }
 ];
 
