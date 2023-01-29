@@ -4,8 +4,7 @@
             <h1>{{ item.strDrink }}</h1>
             <!-- <GoBack /> -->
             <div class="">
-                <img :src="`${item.strDrinkThumb}`" :alt="item.strDrink">
-                <p>{{ item.strInstructions }}</p>
+                <input type="text" placeholder="Search..">
             </div>
         </section>
 

@@ -5,13 +5,17 @@ import HeaderComponent from './components/HeaderComponent.vue'
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
 
+    
     <div class="wrapper">
+      <RouterLink to="/"><span class="icon"><i class="fas fa-martini-glass"></i></span></RouterLink>
+      
       <HeaderComponent msg="Drink API with Vue Project" />
 
       <nav>
         <RouterLink to="/">Home</RouterLink>
+        <RouterLink to="/random">Random</RouterLink>
+        <RouterLink to="/search">Search</RouterLink>
         <RouterLink to="/about">About</RouterLink>
       </nav>
     </div>
@@ -24,9 +28,20 @@ import HeaderComponent from './components/HeaderComponent.vue'
 
 
 <style scoped>
+
+.wrapper{
+  display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 header {
   line-height: 1.5;
   max-height: 100vh;
+}
+
+.icon{
+  font-size: 4rem;
 }
 
 .logo {

@@ -17,12 +17,24 @@ const routes = [
     component: () => import('../views/AboutView.vue')
   },
   {
-    path: "/:id",
-    name: "item.show",
-    component: () => import("../views/ItemShow.vue"),
+    path: "/item/:id",
+    name: "item",
+    component: () => import("../views/ItemView.vue"),
     props: route => ({ ...route.params, id: parseInt(route.params.id) }),
 
-  }
+  },
+  {
+    path: "/search",
+    name: "search",
+    component: () => import("../views/SearchView.vue"),
+    props: route => ({ ...route.params, id: parseInt(route.params.id) }),
+
+  },
+  {
+    path: '/random',
+    name: 'random',
+    component: () => import('../views/RandomItemView.vue')
+  },
 ];
 
 //ROUTER INSTANCE
