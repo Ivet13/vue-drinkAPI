@@ -1,12 +1,26 @@
 <template>
     <div>
-        <section v-if="item" class="">
-            <h1>{{ item.strDrink }}</h1>
+        <section  class="">
+            <h1>Search by drink title</h1>
             <!-- <GoBack /> -->
             <div class="">
-                <input type="text" placeholder="Search..">
+                <input id="" @keyup.enter="getData" v-model="txtInput" type="text">
             </div>
         </section>
+
+        <section v-if="items != null" class="">
+            <ul>
+        <router-link 
+        v-for="item in items" 
+        :key="item.idDrink" 
+        :to="{name: 'item', params:{id:item.idDrink}}"
+        class="">
+        
+          <li>{{ item.strDrink }}</li>
+     
+        </router-link></ul>
+    </section>
+    <p v-else> No results!</p>
 
     </div>
 </template>
@@ -16,16 +30,17 @@
 export default {
     data() {
         return {
-            item: [],
+            items: [],
+            txtInput: '',
         }
     },
     // components: { GoBack },
     props: {
-        id: { type: Number, required: true }
+        id: { type: Number, required: true },
     },
     methods: {
-        async initData() {
-            const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${this.$route.params.id}`)
+        async getData() {
+            const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${this.txtInput}`)
                 .then(async response => {
                     const data = await response.json();
 
@@ -38,7 +53,7 @@ export default {
                     }
                     console.log('item found')
                     console.log(data)
-                    this.item = data.drinks[0];
+                    this.items = data.drinks;
 
                 })
                 .catch(error => {
@@ -53,8 +68,6 @@ export default {
             return parseInt(this$route.params.id)
         },
     },
-    async created() {
-        this.initData()
-    }
+  
 }
 </script>
