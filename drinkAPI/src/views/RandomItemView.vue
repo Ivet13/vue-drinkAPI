@@ -5,7 +5,7 @@
         <router-link 
         v-for="item in items" 
         :key="item.idDrink" 
-        :to="{name: 'item', params:{id:item.idDrink}}"
+        :to="{name: 'item', params:{id:item.idDrink,slug:item.strDrink.replace(/\s+/g, '_')}}"
         class="">
           <h2>{{ item.strDrink }}</h2>
           <img :src="`${item.strDrinkThumb}`" :alt="item.strDrink">
