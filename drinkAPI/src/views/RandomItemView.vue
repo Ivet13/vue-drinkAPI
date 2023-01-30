@@ -15,6 +15,13 @@
   </template>
   
   <style>
+
+  .alco{
+    background-color: #d551a6;
+  }
+  .nonalco{
+    background-color: #51d1d5;
+  }
   @media (min-width: 1024px) {
     .home {
       min-height: 100vh;
