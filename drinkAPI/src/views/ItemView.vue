@@ -16,15 +16,10 @@
 
                 <p>Ingredients:</p>
                 <ul v-if="ingredientsTitles && ingredientsTitles.length">
-                    <li v-for="item of ingredientsTitles">{{ item }} </li>
+                    <li v-for="item of ingredientsTitles">{{ item }}: {{ingredientsMeasurements[ingredientsTitles.indexOf(item)]}}
+                    </li>
                 </ul>
-
-                <p>Measurements:</p>
-                <ul v-if="ingredientsMeasurements && ingredientsMeasurements.length">
-                    <li v-for="item of ingredientsMeasurements">{{ item }} </li>
-                </ul>
-
-
+                
                 <p>Instructions:</p>
                 <p>{{ item.strInstructions }}</p>
 

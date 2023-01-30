@@ -1,6 +1,6 @@
 <template>
     <main class="home">
-      <h1>Get me a random drink!</h1>
+      <button @click="initData()">Get me a random drink!</button>
       <div v-if="items != null" class="">
         <router-link 
         v-for="item in items" 
