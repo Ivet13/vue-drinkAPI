@@ -1,7 +1,8 @@
 <template>
   <main class="home">
     <h1>Welcome to our madness!</h1>
-    <p>Enjoy browsing for drinks, search for a specific drink or just get a random. It's all connected ... to the API, so drinks are being generated.</p>
+    <p>Enjoy browsing for drinks, search for a specific drink or just get a random. It's all connected ... to the API,
+      so drinks are being generated.</p>
   </main>
 </template>
 
@@ -9,7 +10,7 @@
 <script>
 export default {
   data() {
-    
+
   }
 }
 </script>
@@ -17,10 +18,15 @@ export default {
 
 <style scoped>
 main {
-  display:flex;
+  display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  
+
+}
+
+h1 {
+  min-width: 100%;
+  text-align: center;
 }
 
 @media (min-width: 1024px) {

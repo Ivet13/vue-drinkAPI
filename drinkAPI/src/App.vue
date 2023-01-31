@@ -3,6 +3,8 @@
     <div class="wrapper">
       <HeaderComponent msg="Drink API with Vue Project" />
 
+
+
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/random">Random</RouterLink>
@@ -12,7 +14,12 @@
     </div>
   </header>
 
-  <RouterView />
+  <RouterView v-slot="{Component}"></RouterView>
+  <!-- Transition(global vue component) -->
+  <transition name="slide" mode="out-in">
+    <!-- the key atribute is now used here in anonymous component instead of in router-view -->
+    <component :is="Component" :key="$route.path"></component>
+  </transition>
 </template>
 
 
@@ -22,21 +29,18 @@ import HeaderComponent from './components/HeaderComponent.vue'
 </script>
 
 
-<style scoped>
-
-.wrapper{
+<style lang="css">
+.wrapper {
   display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
+
 header {
   line-height: 1.5;
   max-height: 100vh;
 }
-
-
-
 
 nav {
   width: 100%;
@@ -90,4 +94,16 @@ nav a:first-of-type {
     /* margin-top: 1rem; */
   }
 }
+
+/* TRANSFORMATION TEST */
+/* .slide-enter-active,
+.slide-leave-active {
+  transition: opacity 1s, transform 1s;
+
+}
+
+.slide-enter-from, .slide-leave-to {
+  opacity: 0;
+  transform: transalteX(-30%);
+} */
 </style>

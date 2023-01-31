@@ -5,10 +5,11 @@
             <!-- <GoBack /> -->
             <div class="search-bar">
                 <input id="" @keyup.enter="getData" v-model="txtInput" type="text">
+                <span class="search-bar-tooltip">Type in name of the drink and hit enter.</span>
             </div>
         </section>
 
-        <section v-if="items != null" class="">
+        <section v-if="items != null" class="results-container">
             <ul>
         <router-link 
         v-for="item in items" 
@@ -20,7 +21,7 @@
      
         </router-link></ul>
     </section>
-    <p v-else> No results!</p>
+    <p v-else class="results-none-display"> No results!</p>
 
     </div>
 </template>
@@ -81,12 +82,40 @@ export default {
 .search-bar{
     width: 100%;
     /* height: 2rem; */
+    margin-top: 2%;
+    margin-bottom: 2%;
+    position: relative;
 }
 .search-bar input{
     min-width: 50%;
-    font-size: 1em;
+    font-size: 1.5em;
     font: expanded;
     text-align: center;
     letter-spacing: 2px;
+}
+.search-bar-tooltip{
+    visibility: hidden;
+    display: inline-block;
+    z-index: 1;
+    position: absolute;
+    background-color: var(--vt-c-black-soft);
+    color: var(--vt-c-white-soft);
+    border-radius: 9px;
+    width: 20%;
+    top: 100%;
+    margin-left: -60px;
+    left: 50%;
+}
+.search-bar:hover .search-bar-tooltip{
+    visibility: visible;
+    position: absolute;
+    z-index:1;
+}
+.results-container{
+    display: flex;
+    justify-content: center;
+}
+.results-none-display{
+    text-align: center;
 }
 </style>
