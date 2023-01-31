@@ -1,7 +1,7 @@
 <template>
     <div>
-        <section v-if="item" class="">
-            <h1>{{ item.strDrink }}</h1>
+        <section v-if="item" class="random-drink-container">
+            <h1>{{ item.strDrink }} - Detailed view</h1>
             <span v-if="IBA" >International Bartenders Association Official Cocktail List  !</span>
             <!-- <GoBack /> -->
             <div :class="`${alco}`">
@@ -119,3 +119,14 @@ export default {
     }
 }
 </script>
+
+<style>
+.alco {
+    border-top: 2px solid var(--vt-c-redborder-1);
+    padding-top: 1rem;
+}
+.nonalco {
+    border-top: 2px solid var(--vt-c-indigo);
+    padding-top: 1rem;
+}
+</style>

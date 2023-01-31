@@ -1,9 +1,9 @@
 <template>
     <div>
-        <section  class="">
+        <section  class="search-container">
             <h1>Search by drink title</h1>
             <!-- <GoBack /> -->
-            <div class="">
+            <div class="search-bar">
                 <input id="" @keyup.enter="getData" v-model="txtInput" type="text">
             </div>
         </section>
@@ -71,3 +71,22 @@ export default {
   
 }
 </script>
+
+<style>
+.search-container{
+    width:100%;
+    margin:auto;
+    text-align: center;
+}
+.search-bar{
+    width: 100%;
+    /* height: 2rem; */
+}
+.search-bar input{
+    min-width: 50%;
+    font-size: 1em;
+    font: expanded;
+    text-align: center;
+    letter-spacing: 2px;
+}
+</style>
