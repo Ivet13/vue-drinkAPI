@@ -40,6 +40,9 @@ const routes = [
 //ROUTER INSTANCE
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
+  //ACTIVE PAGE CLASS 
+  linkActiveClass: 'drink-actively',
+  //ROUTE RECORDS
   routes
 })
 
