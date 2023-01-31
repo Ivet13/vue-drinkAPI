@@ -129,4 +129,17 @@ export default {
     border-top: 2px solid var(--vt-c-indigo);
     padding-top: 1rem;
 }
+
+.random-drink-container {
+  width: 50%;
+  margin: auto;
+  /* border-radius: 5%; */
+  padding: 2rem;
+  margin-top: 17px;
+  box-shadow: 3px 3px 15px grey;
+}
+
+img {
+  width: 100%;
+}
 </style>
