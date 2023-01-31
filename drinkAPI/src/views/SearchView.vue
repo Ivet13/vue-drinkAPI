@@ -2,7 +2,7 @@
     <div>
         <section  class="search-container">
             <h1>Search by drink title</h1>
-            <!-- <GoBack /> -->
+            <GoBack />
             <div class="search-bar">
                 <input id="" @keyup.enter="getData" v-model="txtInput" type="text">
                 <span class="search-bar-tooltip">Type in name of the drink and hit enter.</span>
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-//import GoBack from '@/components/GoBack.vue';
+import GoBack from '@/components/GoBack.vue';
 export default {
     data() {
         return {
@@ -35,7 +35,7 @@ export default {
             txtInput: '',
         }
     },
-    // components: { GoBack },
+    components: { GoBack },
     props: {
         id: { type: Number, required: true },
     },
