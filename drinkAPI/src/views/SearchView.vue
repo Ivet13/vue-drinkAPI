@@ -92,6 +92,7 @@ export default {
     font: expanded;
     text-align: center;
     letter-spacing: 2px;
+    border: 2px solid var(--vt-c-indigo);
 }
 .search-bar-tooltip{
     visibility: hidden;

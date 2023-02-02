@@ -1,27 +1,32 @@
 <template>
     <div>
-        <section v-if="item" class="random-drink-container">
+        <section v-if="item" class="random-drink-container-detail">
             <h1>{{ item.strDrink }} - Detailed view</h1>
-            <span v-if="IBA" >International Bartenders Association Official Cocktail List  !</span>
+            <span v-if="IBA">International Bartenders Association Official Cocktail List !</span>
             <!-- <GoBack /> -->
-            <div :class="`${alco}`">
-               
-                <img :src="`${item.strDrinkThumb}`" :alt="item.strDrink">
-                <p>Category:</p>
-                <p>{{ item.strCategory }}</p>
-                <p>{{ item.strInstructions }}</p>
+            <div :class="`${alco} drink-detail-wrapper`">
 
-                <p>Glass:</p>
-                <p>{{ item.strGlass }}</p>
+                <img class="img-detailed" :src="`${item.strDrinkThumb}`" :alt="item.strDrink">
+                <div class="drink-details-text-container">
 
-                <p>Ingredients:</p>
-                <ul v-if="ingredientsTitles && ingredientsTitles.length">
-                    <li v-for="item of ingredientsTitles">{{ item }}: {{ingredientsMeasurements[ingredientsTitles.indexOf(item)]}}
-                    </li>
-                </ul>
-                
-                <p>Instructions:</p>
-                <p>{{ item.strInstructions }}</p>
+                    <p>Category:</p>
+                    <p>{{ item.strCategory }}</p>
+                    <p>{{ item.strInstructions }}</p>
+
+                    <p>Glass:</p>
+                    <p>{{ item.strGlass }}</p>
+
+                    <p>Ingredients:</p>
+                    <ul v-if="ingredientsTitles && ingredientsTitles.length">
+                        <li v-for="item of ingredientsTitles">{{ item }}:
+                            {{ ingredientsMeasurements[ingredientsTitles.indexOf(item)]}}
+                        </li>
+                    </ul>
+
+                    <p>Instructions:</p>
+                    <p>{{ item.strInstructions }}</p>
+
+                </div>
 
             </div>
         </section>
@@ -125,21 +130,43 @@ export default {
     border-top: 2px solid var(--vt-c-redborder-1);
     padding-top: 1rem;
 }
+
 .nonalco {
     border-top: 2px solid var(--vt-c-indigo);
     padding-top: 1rem;
 }
 
-.random-drink-container {
-  width: 50%;
-  margin: auto;
-  /* border-radius: 5%; */
-  padding: 2rem;
-  margin-top: 17px;
-  box-shadow: 3px 3px 15px grey;
+.drink-detail-wrapper {
+    display: flex;
+    flex-wrap: wrap;
 }
 
-img {
-  width: 100%;
+.random-drink-container-detail {
+    width: 90%;
+    margin: auto;
+    padding: 2rem;
+    margin-top: 17px;
+    margin-bottom: 5%;
+    box-shadow: 3px 3px 15px grey;
+}
+
+.img-detailed {
+    width: 40%;
+    height: fit-content;
+}
+
+.drink-details-text-container {
+    padding: 2%;
+    width: 450px;
+}
+
+@media (max-width: 1024px) {
+    .img-detailed {
+        width: 100%;
+    }
+
+    /* .random-drink-container{
+        width: 95%;
+    } */
 }
 </style>

@@ -17,6 +17,10 @@ export default {
 
 
 <style scoped>
+.home{
+  padding: 3%;
+}
+
 main {
   display: flex;
   justify-content: center;

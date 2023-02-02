@@ -65,15 +65,16 @@ export default {
 .random-drink-container {
   width: 50%;
   margin: auto;
-  /* border-radius: 5%; */
   padding: 2rem;
   margin-top: 17px;
+  margin-bottom: 5%;
   box-shadow: 3px 3px 15px grey;
 }
 
 img {
   width: 100%;
 }
+
 
 .random-drink-button {
   /* height: auto;
@@ -86,7 +87,11 @@ img {
   margin: auto;
 }
 
-@media (min-width: 1024px) {
+@media (max-width: 1024px) {
+  .random-drink-container {
+    width: 90%;
+  }
+
   /* .home {
           min-height: 100vh;
           display: flex;

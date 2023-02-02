@@ -45,8 +45,7 @@ props:{
   text-transform: capitalize;
 }
 
-.greetings h1,
-.greetings h3 {
+.greetings {
   text-align: center;
 }
 .greetings{
