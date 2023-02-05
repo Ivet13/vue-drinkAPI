@@ -14,13 +14,19 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (About.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import('../views/AboutView.vue')
+    component: () => import('../views/AboutView.vue'),
+    meta: {
+      requiresAuth: true,
+    }
   },
   {
     path: "/item/:id/:slug",
     name: "item",
     component: () => import("../views/ItemView.vue"),
     props: route => ({ ...route.params, id: parseInt(route.params.id) }),
+    meta: {
+      requiresAuth: true,
+    }
 
   },
   {
@@ -28,13 +34,25 @@ const routes = [
     name: "search",
     component: () => import("../views/SearchView.vue"),
     props: route => ({ ...route.params, id: parseInt(route.params.id) }),
+    meta: {
+      requiresAuth: true,
+    }
 
   },
   {
     path: '/random',
     name: 'random',
-    component: () => import('../views/RandomItemView.vue')
+    component: () => import('../views/RandomItemView.vue'),
+    meta: {
+      requiresAuth: true,
+    }
   },
+  ,
+    {
+      path: "/login",
+      name: "login",
+      component: () => import("../views/Login.vue"),
+    }
 ];
 
 //ROUTER INSTANCE
@@ -44,6 +62,16 @@ const router = createRouter({
   linkActiveClass: 'drink-actively',
   //ROUTE RECORDS
   routes
+})
+
+router.beforeEach((to, from) => {
+  if (to.meta.requiresAuth && !window.user) {
+    // needs to login if not already logged in
+    return { 
+      name: 'login',
+      query: { redirect: to.fullPath}
+   }
+  }
 })
 
 export default router
