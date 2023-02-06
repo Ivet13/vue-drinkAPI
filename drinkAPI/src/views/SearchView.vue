@@ -4,7 +4,7 @@
             <h1>Search by drink title</h1>
             <GoBack />
             <div class="search-bar">
-                <input id="" @keyup.enter="getData" v-model="txtInput" type="text">
+                <input id="" @keyup.enter="getData" v-model="txtInput" type="text" placeholder="Search..">
                 <span class="search-bar-tooltip">Type in name of the drink and hit enter.</span>
             </div>
         </section>
@@ -93,6 +93,12 @@ export default {
     text-align: center;
     letter-spacing: 2px;
     border: 2px solid var(--vt-c-indigo);
+    background-image: url(../assets/search.svg);
+    background-position: 2px 4px;
+    background-repeat: no-repeat;
+}
+input[type=text]:focus {
+    background-color: var(--vt-c-text-dark-2);
 }
 .search-bar-tooltip{
     visibility: hidden;

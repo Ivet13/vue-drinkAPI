@@ -1,13 +1,33 @@
 <template>
-    <div class="login">
+    <div class="login-container">
         <h1>Login</h1>
         <form class="form" @submit.prevent="login">
             <label for="username">Username</label>
-            <input v-model="username" name="username" type="text" class="input">
+            <input 
+                v-model="username" 
+                name="username" 
+                type="text" 
+                class="input" 
+                :class="{validated: isValidated, 'text-danger':hasError}" 
+                placeholder="type anything" 
+                id="inputName">
+            <span class="usernameModal">{{ inputfield_1message }}</span>
+            
             <label for="password">Password</label>
-            <input v-model="password" name="password" type="text" class="input">
-            <button class="btn">Submit</button>
+            <input 
+                v-model="password" 
+                name="password" 
+                type="text" 
+                class="input"
+                :class="classInputPasswordObject" 
+                placeholder="type anything" 
+                id="inputPassword">
+
+            <button class="btn loginSubmitBtn">Submit</button>
         </form>
+        <!-- this button cannot be inside form, because it behaves as a submit button -->
+        <button @click="fillInputfields" class="btn">Fill fields</button>
+        <button @click="clearInputfields" class="btn">Clear fields</button>
 
 
     </div>
@@ -18,7 +38,14 @@ export default {
     data() {
         return {
             username: '',
-            password: ''
+            password: '',
+            isValidated: false,     //false == the class wont appear
+            hasError: true,         //true == there is a class 'text-danger' defined in element rendered
+            //these values can be put together into 1 class and that class bound to the element >
+            classInputPasswordObject:{
+                passwordValidated : false,
+                'text-danger': true         //false == ? 
+            }
         }
     },
     methods: {
@@ -42,6 +69,9 @@ export default {
                 //        return Promise.reject(error);
                //     }
 
+                    if(this.username.length > 0 && this.password.length > 0){
+                        console.info("Correct - Username and password are not empty.")
+                    }
                     window.user = this.username;
                     const redirectPath = this.$route.query.redirect || '/protected';
                     this.$router.push(redirectPath);
@@ -52,9 +82,95 @@ export default {
              //   });
 
 
+        },
+        fillInputfields() {
+            this.username = "tibor"
+            this.password = "random_password"
+            // document.getElementById("inputName").value = "Tibor";
+            // document.getElementById("inputPassword").value = "Random_Password";
+        },
+        clearInputfields() {
+            this.username = ""
+            this.password = ""
+        }
+    },
+    computed: {
+        //computed getter
+        inputfield_1message(){
+            let chars_SET = 2; 
+            return this.username.length > chars_SET ? "correct" : "too few characters";
+            // return this.username.length > chars_SET ? this.validateNameLength(true) : "too few characters";
+        },
+        //computed setter
+        validateNameLength(value){
+            let char_SET = 2;
+            if(this.username.length > char_SET){
+                
+                this.hasError = !value; 
+                console.log(this.hasError)
+            }
+        },
+        //computed property that returns an object, without this, the bound data wont appear in classes
+        classInputPasswordObject(){
+            return {
+                passwordValidated : false, //true == class passwordValidated appear
+                'text-danger' : this.password.length > 2 ? false : true
+            }
         }
     }
 }
 </script>
+<style>
+.login-container{
+    margin: auto;
+    width: 35%;
+}
+h1{
+    text-align: center;
+}
+.form{
+    display: flex;
+    flex-direction: column;
+    /* max-width: 25%; */
+    font-size: larger;
+    /* text-align: center; */
+    /* margin: auto; */
+    align-content: center;
+}
+.input{
+    width: 100%;
+    /* height: 2rem; */
+    margin-top: 2%;
+    margin-bottom: 2%;
+    position: relative;
+    text-align: center;
+    font-size: 1.2em;
+    letter-spacing: 2px;
+    border: 2px solid var(--vt-c-indigo);
+    outline:none;
+}
+.loginSubmitBtn{
+    margin-top: 2rem;
+    max-width: 10rem;
+    font-size: large;
+    /* text-align: center; */
+    margin: 2rem auto;
+    padding: 1rem;
+    border-style: dashed;
+}
+.usernameModal{
+    visibility:hidden;
+}
+.input:focus {
+    background-color: var(--vt-c-text-dark-2);
+    /* border: 2px solid red; */
+}
+.text-danger{
+    border-color: brown;
+}
+.input:focus .usernameModal{
+    visibility:visible;
+}
+</style>
 
 
