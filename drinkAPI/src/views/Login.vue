@@ -110,10 +110,10 @@ export default {
                 console.log(this.hasError)
             }
         },
-        //computed property that returns an object, without this, the bound data wont appear in classes
+        //computed property that returns an object, without this, the bound data won't appear in classes
         classInputPasswordObject(){
             return {
-                passwordValidated : false, //true == class passwordValidated appear
+                passwordValidated : false, //true == class passwordValidated appears
                 'text-danger' : this.password.length > 2 ? false : true
             }
         }
@@ -168,7 +168,7 @@ h1{
 .text-danger{
     border-color: brown;
 }
-.input:focus .usernameModal{
+.input:focus ~ .usernameModal{
     visibility:visible;
 }
 </style>
