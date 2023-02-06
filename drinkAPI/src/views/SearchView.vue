@@ -89,7 +89,7 @@ export default {
 .search-bar input{
     min-width: 50%;
     font-size: 1.5em;
-    font: expanded;
+    font-stretch: expanded;
     text-align: center;
     letter-spacing: 2px;
     border: 2px solid var(--vt-c-indigo);
@@ -104,7 +104,7 @@ export default {
     border-radius: 9px;
     width: 20%;
     top: 100%;
-    margin-left: -60px;
+    margin-left: -5px;
     left: 50%;
 }
 .search-bar:hover .search-bar-tooltip{
