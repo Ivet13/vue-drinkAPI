@@ -11,7 +11,7 @@
                 :class="{validated: isValidated, 'text-danger':hasError}" 
                 placeholder="type anything" 
                 id="inputName">
-            <span class="usernameModal">{{ inputfield_1message }}</span>
+            <span class="usernameModal">{{ username_hint_message }}</span>
             
             <label for="password">Password</label>
             <input 
@@ -22,6 +22,7 @@
                 :class="classInputPasswordObject" 
                 placeholder="type anything" 
                 id="inputPassword">
+            <span class="passwordModal">{{ password_hint_message }}</span>
 
             <button class="btn loginSubmitBtn">Submit</button>
         </form>
@@ -96,10 +97,13 @@ export default {
     },
     computed: {
         //computed getter
-        inputfield_1message(){
+        username_hint_message(){
             let chars_SET = 2; 
             return this.username.length > chars_SET ? "correct" : "too few characters";
             // return this.username.length > chars_SET ? this.validateNameLength(true) : "too few characters";
+        },
+        password_hint_message(){
+            return "TODO"
         },
         //computed setter
         validateNameLength(value){
@@ -158,17 +162,30 @@ h1{
     padding: 1rem;
     border-style: dashed;
 }
-.usernameModal{
-    visibility:hidden;
-}
 .input:focus {
     background-color: var(--vt-c-text-dark-2);
     /* border: 2px solid red; */
 }
 .text-danger{
-    border-color: brown;
+    border-color: var(--vt-c-redborder-1);
 }
-.input:focus ~ .usernameModal{
+.border-danger{
+    
+}
+.border-ok{
+    border-color: var(--vt-c-greenborder-1);
+}
+/* HINT MODALS */
+.usernameModal{
+    visibility: hidden;
+}
+.input[name="username"]:focus ~ .usernameModal{
+    visibility:visible;
+}
+.passwordModal{
+    visibility: hidden;
+}
+.input[name="password"]:focus ~ .passwordModal{
     visibility:visible;
 }
 </style>
