@@ -8,10 +8,10 @@
                 name="username" 
                 type="text" 
                 class="input" 
-                :class="{validated: isValidated, 'text-danger':hasError}" 
-                placeholder="type anything" 
+                :class="{validated: isValidated, 'text-danger':hasError},classInputNameObject" 
+                placeholder="Enter your name" 
                 id="inputName">
-            <span class="usernameModal">{{ username_hint_message }}</span>
+            <span class="usernameModal" v-if="classInputNameObject.CharLenError">{{ username_hint_message }}</span>
             
             <label for="password">Password</label>
             <input 
@@ -20,7 +20,7 @@
                 type="text" 
                 class="input"
                 :class="classInputPasswordObject" 
-                placeholder="type anything" 
+                placeholder="Enter password" 
                 id="inputPassword">
             <span class="passwordModal">{{ password_hint_message }}</span>
 
@@ -42,10 +42,16 @@ export default {
             password: '',
             isValidated: false,     //false == the class wont appear
             hasError: true,         //true == there is a class 'text-danger' defined in element rendered
+            classInputNameObject:{
+                CharLenError : true,
+                'border-danger': true,         //default:true == red colored border
+                'border-ok': false              //default false
+            },
             //these values can be put together into 1 class and that class bound to the element >
             classInputPasswordObject:{
                 passwordValidated : false,
-                'text-danger': true         //false == ? 
+                'border-danger': true,         //default:true == red colored border
+                'border-ok':false              //default false
             }
         }
     },
@@ -105,21 +111,43 @@ export default {
         password_hint_message(){
             return "TODO"
         },
-        //computed setter
-        validateNameLength(value){
+        //computed setter - nefunguje zatial reaktivity!!
+        validateNameLength(){
             let char_SET = 2;
             if(this.username.length > char_SET){
                 
-                this.hasError = !value; 
+                this.hasError = false; 
+                console.log(this.hasError)
+            }else{
+                this.hasError == true;
                 console.log(this.hasError)
             }
         },
         //computed property that returns an object, without this, the bound data won't appear in classes
         classInputPasswordObject(){
             return {
-                passwordValidated : false, //true == class passwordValidated appears
-                'text-danger' : this.password.length > 2 ? false : true
+                passwordValidated : false,      //true == class passwordValidated appears
+                'border-danger' : this.password.length > 2 ? false : true,
+                'border-ok' : this.password.length > 2 ? true : false
+
             }
+        },
+        classInputNameObject(){ 
+                let char_SET = 2
+                if(this.username.length > char_SET){
+                    return {
+                        CharLenError : false,
+                        'border-danger' : false,
+                        'border-ok': true
+                    }
+                }else{
+                    return {
+                        CharLenError : true,
+                        'border-danger' : true,
+                        'border-ok': false
+                    }
+                }
+                // CharLenError : this.username.length > 2 ? false : true,
         }
     }
 }
@@ -167,17 +195,17 @@ h1{
     /* border: 2px solid red; */
 }
 .text-danger{
-    border-color: var(--vt-c-redborder-1);
+    /* color: red; */
 }
 .border-danger{
-    
+    border-color: var(--vt-c-redborder-1);
 }
 .border-ok{
     border-color: var(--vt-c-greenborder-1);
 }
 /* HINT MODALS */
 .usernameModal{
-    visibility: hidden;
+    /* visibility: hidden; */
 }
 .input[name="username"]:focus ~ .usernameModal{
     visibility:visible;
