@@ -11,8 +11,9 @@
                 :class="{validated: isValidated, 'text-danger':hasError},classInputNameObject" 
                 placeholder="Enter your name" 
                 id="inputName">
-            <span class="usernameModal" v-if="classInputNameObject.CharLenError">{{ username_hint_message }}</span>
-            
+            <span class="usernameModal" v-if="classInputNameObject.CharLenError" :style="styleObject">{{ username_hint_message }}</span>
+            <span class="usernameModal" v-else>filled correctly</span>
+
             <label for="password">Password</label>
             <input 
                 v-model="password" 
@@ -22,6 +23,8 @@
                 :class="classInputPasswordObject" 
                 placeholder="Enter password" 
                 id="inputPassword">
+            <span class="passwordModal">{{ password_hint_message }}</span>
+            <span class="passwordModal">{{ password_hint_message }}</span>
             <span class="passwordModal">{{ password_hint_message }}</span>
 
             <button class="btn loginSubmitBtn">Submit</button>
@@ -52,6 +55,9 @@ export default {
                 passwordValidated : false,
                 'border-danger': true,         //default:true == red colored border
                 'border-ok':false              //default false
+            },
+            styleObject:{
+                color: 'red'
             }
         }
     },
@@ -155,7 +161,7 @@ export default {
 <style>
 .login-container{
     margin: auto;
-    width: 35%;
+    max-width: 70%;
 }
 h1{
     text-align: center;
@@ -205,13 +211,19 @@ h1{
 }
 /* HINT MODALS */
 .usernameModal{
-    /* visibility: hidden; */
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+
+    visibility: hidden;
+    /* font-size: small; */
 }
 .input[name="username"]:focus ~ .usernameModal{
     visibility:visible;
 }
 .passwordModal{
     visibility: hidden;
+    /* font-size: small; */
 }
 .input[name="password"]:focus ~ .passwordModal{
     visibility:visible;
