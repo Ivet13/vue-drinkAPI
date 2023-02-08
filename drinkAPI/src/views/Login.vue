@@ -1,8 +1,8 @@
 <template>
     <div class="login-container">
         <h1>Login</h1>
-        <form class="form" @submit.prevent="login">
-            <label for="username">Username</label>
+        <form class="form" @submit.prevent="login" autocomplete="off">
+            <label for="inputName">Username</label>
             <input 
                 v-model="username" 
                 name="username" 
@@ -11,10 +11,10 @@
                 :class="{validated: isValidated, 'text-danger':hasError},classInputNameObject" 
                 placeholder="Enter your name" 
                 id="inputName">
-            <span class="usernameModal" v-if="classInputNameObject.CharLenError" :style="styleObject">{{ username_hint_message }}</span>
+            <span class="usernameModal" v-if="classInputNameObject.charLenError" :style="styleObject">{{ username_hint_message }}</span>
             <span class="usernameModal" v-else>filled correctly</span>
 
-            <label for="password">Password</label>
+            <label for="inputPassword">Password</label>
             <input 
                 v-model="password" 
                 name="password" 
@@ -27,7 +27,13 @@
             <span class="passwordModal">{{ password_hint_message }}</span>
             <span class="passwordModal">{{ password_hint_message }}</span>
 
-            <button class="btn loginSubmitBtn">Submit</button>
+            <button 
+                type="button"
+                class="btn loginSubmitBtn" 
+                :class="[isValidated? 'loginSubmitBtnOk' : 'loginSubmitBtnDanger']"
+                @click="warn('Form is being submitted!', $event)"
+                >Submit
+            </button>
         </form>
         <!-- this button cannot be inside form, because it behaves as a submit button -->
         <button @click="fillInputfields" class="btn">Fill fields</button>
@@ -43,10 +49,10 @@ export default {
         return {
             username: '',
             password: '',
-            isValidated: false,     //false == the class wont appear
+            isValidated: false,     //modifies the style of the submit button
             hasError: true,         //true == there is a class 'text-danger' defined in element rendered
             classInputNameObject:{
-                CharLenError : true,
+                charLenError : true,
                 'border-danger': true,         //default:true == red colored border
                 'border-ok': false              //default false
             },
@@ -82,12 +88,17 @@ export default {
                 //        return Promise.reject(error);
                //     }
 
-                    if(this.username.length > 0 && this.password.length > 0){
-                        console.info("Correct - Username and password are not empty.")
-                    }
+            //VALIDATION
+
+                if(this.formValidation()){
+                    
                     window.user = this.username;
                     const redirectPath = this.$route.query.redirect || '/protected';
                     this.$router.push(redirectPath);
+                }else{
+                    console.error('You sucker!')
+                }
+
              //   })
               //  .catch(error => {
              //       this.errorMessage = error;
@@ -95,6 +106,15 @@ export default {
              //   });
 
 
+        },
+        formValidation(){
+            if(this.username.length > 0 && this.password.length > 0){
+                console.info("Correct - Username and password are not empty.")
+                return true
+            }else{
+                console.info("Incorrectly filled form!")
+                return false
+            }
         },
         fillInputfields() {
             this.username = "tibor"
@@ -105,10 +125,20 @@ export default {
         clearInputfields() {
             this.username = ""
             this.password = ""
+        },
+        //EVENT HANDER TEST -- delete later
+        warn(message,event){
+            //now we have access to the native event
+            if(event){
+                // event.preventDefault()
+
+                console.warn(message)
+            }
+            //alert(message)
         }
     },
     computed: {
-        //computed getter
+        //computed getters
         username_hint_message(){
             let chars_SET = 2; 
             return this.username.length > chars_SET ? "correct" : "too few characters";
@@ -194,7 +224,14 @@ h1{
     /* text-align: center; */
     margin: 2rem auto;
     padding: 1rem;
+}
+.loginSubmitBtnDanger{
     border-style: dashed;
+    cursor: none;
+}
+.loginSubmitBtnOk{
+    border-style: solid;
+    cursor:pointer;
 }
 .input:focus {
     background-color: var(--vt-c-text-dark-2);
