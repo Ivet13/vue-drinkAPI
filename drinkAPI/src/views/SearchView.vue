@@ -4,7 +4,7 @@
             <h1>Search by drink title</h1>
             <GoBack />
             <div class="search-bar">
-                <input id="" @keyup.enter="getData" v-model="txtInput" type="text" placeholder="Search..">
+                <input id="" @keyup.enter="getData" v-model="txtInput" type="search" placeholder="Search..">
                 <span class="search-bar-tooltip">Type in name of the drink and hit enter.</span>
             </div>
         </section>

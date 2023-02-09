@@ -1,7 +1,7 @@
 <template>
     <div class="login-container">
         <h1>Login</h1>
-        <form class="form" @submit.prevent="login" autocomplete="off">
+        <form class="form" @submit.prevent="login" autocomplete="on">
             <label for="inputName">Username</label>
             <input 
                 v-model="username" 
@@ -10,7 +10,10 @@
                 class="input" 
                 :class="{validated: isValidated, 'text-danger':hasError},classInputNameObject" 
                 placeholder="Enter your name" 
-                id="inputName">
+                id="inputName"
+                required
+                autofocus
+                >
             <span class="usernameModal" v-if="classInputNameObject.charLenError" :style="styleObject">{{ username_hint_message }}</span>
             <span class="usernameModal" v-else>filled correctly</span>
 
@@ -18,17 +21,21 @@
             <input 
                 v-model="password" 
                 name="password" 
-                type="text" 
+                :type="togglePasswordType" 
                 class="input"
                 :class="classInputPasswordObject" 
                 placeholder="Enter password" 
-                id="inputPassword">
+                id="inputPassword"
+                required
+                autocomplete="off"
+                >
+            <button type="button" class="btn btnPass" @click="togglePasswordText">show password</button>
             <span class="passwordModal">{{ password_hint_message }}</span>
             <span class="passwordModal">{{ password_hint_message }}</span>
             <span class="passwordModal">{{ password_hint_message }}</span>
 
+            <!-- submit button cant have type="button" ?!! -->
             <button 
-                type="button"
                 class="btn loginSubmitBtn" 
                 :class="[isValidated? 'loginSubmitBtnOk' : 'loginSubmitBtnDanger']"
                 @click="warn('Form is being submitted!', $event)"
@@ -51,6 +58,7 @@ export default {
             password: '',
             isValidated: false,     //modifies the style of the submit button
             hasError: true,         //true == there is a class 'text-danger' defined in element rendered
+            togglePasswordType: 'password',
             classInputNameObject:{
                 charLenError : true,
                 'border-danger': true,         //default:true == red colored border
@@ -68,6 +76,9 @@ export default {
         }
     },
     methods: {
+        togglePasswordText(){
+            this.togglePasswordType == 'text' ? this.togglePasswordType = 'password' : this.togglePasswordType = 'text'
+        },
         login() {
             // Auth user against the API -> TODO
             // POST request using fetch with error handling
@@ -248,9 +259,9 @@ h1{
 }
 /* HINT MODALS */
 .usernameModal{
-    position: absolute;
+    /* position: absolute;
     top: 1rem;
-    right: 1rem;
+    right: 1rem; */
 
     visibility: hidden;
     /* font-size: small; */
@@ -264,6 +275,10 @@ h1{
 }
 .input[name="password"]:focus ~ .passwordModal{
     visibility:visible;
+}
+.btnPass{
+    width: 8rem;
+    margin-left: auto;
 }
 </style>
 
