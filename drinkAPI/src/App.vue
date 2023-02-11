@@ -9,6 +9,7 @@
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/random">Random</RouterLink>
         <RouterLink to="/search">Search</RouterLink>
+        <RouterLink to="/list">Drinks by alphabet!</RouterLink>
         <RouterLink to="/about">About</RouterLink>
       </nav>
     </div>
