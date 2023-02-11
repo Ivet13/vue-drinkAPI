@@ -3,43 +3,31 @@
         <h1>{{ header || 'Login' }}</h1>
         <form class="form" @submit.prevent="login" autocomplete="on">
             <label for="inputName">Username</label>
-            <input 
-                v-model="username" 
-                name="username" 
-                type="text" 
-                class="input" 
-                :class="{validated: isValidated, 'text-danger':hasError},classInputNameObject" 
-                placeholder="Enter your name" 
-                id="inputName"
-                required
-                autofocus
-                >
-            <span class="usernameModal" v-if="classInputNameObject.charLenError" :style="styleObject">{{ username_hint_message }}</span>
+            <input v-model="username" name="username" type="text" class="input"
+                :class="{ validated: isValidated, 'text-danger': hasError }, classInputNameObject"
+                placeholder="Enter your name" id="inputName" required autofocus
+                oninvalid="this.setCustomValidity('Enter your name, this field is required.')">
+            <span class="usernameModal" v-if="classInputNameObject.charLenError" :style="styleObject">{{
+                username_hint_message
+            }}</span>
             <span class="usernameModal" v-else>filled correctly</span>
 
             <label for="inputPassword">Password</label>
-            <input 
-                v-model="password" 
-                name="password" 
-                :type="togglePasswordType" 
-                class="input"
-                :class="classInputPasswordObject" 
-                placeholder="Enter password" 
-                id="inputPassword"
-                required
-                autocomplete="off"
-                >
-            <button type="button" class="btn btnPass" @click="togglePasswordText">{{pwdToggle}} password</button>
+            <div class="inputWrapper">
+                <input v-model="password" name="password" :type="togglePasswordType" class="input"
+                    :class="classInputPasswordObject" placeholder="Enter password" id="inputPassword" required
+                    autocomplete="off" oninvalid="this.setCustomValidity('Enter password, this field is required.')">
+                <i class="inputEyeIcon" :class="inputIconToggle" @click="togglePasswordText"></i>
+            </div>
+            <button type="button" class="btn btnPass" @click="togglePasswordText">{{ pwdToggle }} password</button>
             <span class="passwordModal">{{ password_hint_message }}</span>
             <span class="passwordModal">{{ password_hint_message }}</span>
             <span class="passwordModal">{{ password_hint_message }}</span>
 
+
             <!-- submit button cant have type="button" but it should have type="submit" ?!! -->
-            <button 
-                class="btn loginSubmitBtn" 
-                :class="[isValidated ? 'loginSubmitBtnOk' : 'loginSubmitBtnDanger']"
-                @click="warn('Form is being submitted!', $event)"
-                >Submit
+            <button class="btn loginSubmitBtn" :class="[isValidated ? 'loginSubmitBtnOk' : 'loginSubmitBtnDanger']"
+                @click="warn('Form is being submitted!', $event)">Submit
             </button>
         </form>
         <!-- this button cannot be inside form, because it behaves as a submit button -->
@@ -60,77 +48,83 @@ export default {
             hasError: true,         //true == there is a class 'text-danger' defined in element rendered
             togglePasswordType: 'password',
             pwdToggle: 'show',
-            classInputNameObject:{
-                charLenError : true,
+            classInputNameObject: {
+                charLenError: true,
                 'border-danger': true,         //default:true == red colored border
                 'border-ok': false              //default false
             },
             //these values can be put together into 1 class and that class bound to the element >
-            classInputPasswordObject:{
-                passwordValidated : false,
+            classInputPasswordObject: {
+                passwordValidated: false,
                 'border-danger': true,         //default:true == red colored border
-                'border-ok':false              //default false
+                'border-ok': false              //default false
             },
-            styleObject:{
+            styleObject: {
                 color: 'red'
-            }
+            },
+            inputIconToggle: 'inputEyeNoShow'
         }
     },
     methods: {
-        togglePasswordText(){
-            this.togglePasswordType == 'text' ? this.pwdToggle = 'show' : this.pwdToggle = 'hide'
+        togglePasswordText() {
+            this.togglePasswordType == 'text' ? this.inputIconToggle = 'inputEyeNoShow' : this.inputIconToggle = 'inputEyeShow'
             this.togglePasswordType == 'text' ? this.togglePasswordType = 'password' : this.togglePasswordType = 'text'
         },
         login(event) {
             //TEST OF EVENT ON SUBMIT
             console.log(event)
+            //username != this.username, but captured username from event
+            const { username, password } = Object.fromEntries(new FormData(event.target))
+            console.log('username captured: ' + username + ' password captured : ' + password)
+            //END TEST 
 
             // Auth user against the API -> TODO
             // POST request using fetch with error handling
-          //  const requestOptions = {
+            //  const requestOptions = {
             //    method: 'POST',
-                //the gfollowing line triggers a CORS preflight in the browser
-               // headers: { 'Content-Type': 'application/json' },
-           //     body: JSON.stringify({ "username": this.username, "password": this.password })
-          //  };
+            //the gfollowing line triggers a CORS preflight in the browser
+            // headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify({ "username": this.username, "password": this.password })
+            //  };
             //fetch('http://localhost:8080/users/login', requestOptions)
-             //   .then(async response => {
-              //      const data = await response.json();
+            //   .then(async response => {
+            //      const data = await response.json();
 
-                    // check for error response
-               //     if (!response.ok) {
-                        // get error message from body or default to response status
-                //        const error = (data && data.message) || response.status;
-                //        return Promise.reject(error);
-               //     }
+            // check for error response
+            //     if (!response.ok) {
+            // get error message from body or default to response status
+            //        const error = (data && data.message) || response.status;
+            //        return Promise.reject(error);
+            //     }
 
             //VALIDATION
 
-                if(this.formValidation()){
+            if (this.formValidation()) {
+                //dummy authorization
+                window.user = this.username;
 
-                    window.user = this.username;
-                    const redirectPath = this.$route.query.redirect || '/protected';
-                    this.$router.push(redirectPath);
-                }else{
-                    alert('Form validation - fail, you shouldnt see this!')
-                }
+                const redirectPath = this.$route.query.redirect || '/protected';
+                this.$router.push(redirectPath);
+            } else {
+                alert('Form validation - fail, you shouldnt see this!')
+            }
 
-             //   })
-              //  .catch(error => {
-             //       this.errorMessage = error;
-               //     console.error('There was an error!', error);
-             //   });
+            //   })
+            //  .catch(error => {
+            //       this.errorMessage = error;
+            //     console.error('There was an error!', error);
+            //   });
 
 
         },
-        formValidation(){
-            if(this.username.length > 2 && this.password.length > 2){
+        formValidation() {
+            if (this.username.length > 2 && this.password.length > 2) {
                 console.info("Correct - Username and password are not empty.")
                 //SUBMIT BUTTON STYLE CHANGE
                 this.isValidated = true;
-                
+
                 return true
-            }else{
+            } else {
                 console.info("Incorrectly filled form!")
                 return false
             }
@@ -146,9 +140,9 @@ export default {
             this.password = ""
         },
         //EVENT HANDER TEST -- delete later
-        warn(message,event){
+        warn(message, event) {
             //now we have access to the native event
-            if(event){
+            if (event) {
                 // event.preventDefault()
 
                 console.warn(message)
@@ -158,64 +152,70 @@ export default {
     },
     computed: {
         //computed getters
-        username_hint_message(){
-            let chars_SET = 2; 
+        username_hint_message() {
+            let chars_SET = 2;
             return this.username.length > chars_SET ? "correct" : "too few characters";
             // return this.username.length > chars_SET ? this.validateNameLength(true) : "too few characters";
         },
-        password_hint_message(){
+        password_hint_message() {
             return "TODO"
         },
         //computed setter - nefunguje zatial reaktivity!!
-        validateNameLength(){
+        validateNameLength() {
             let char_SET = 2;
-            if(this.username.length > char_SET){
-                
-                this.hasError = false; 
+            if (this.username.length > char_SET) {
+
+                this.hasError = false;
                 console.log(this.hasError)
-            }else{
+            } else {
                 this.hasError == true;
                 console.log(this.hasError)
             }
         },
         //computed property that returns an object, without this, the bound data won't appear in classes
-        classInputPasswordObject(){
+        classInputPasswordObject() {
             return {
-                passwordValidated : false,      //true == class passwordValidated appears
-                'border-danger' : this.password.length > 2 ? false : true,
-                'border-ok' : this.password.length > 2 ? true : false
+                passwordValidated: false,      //true == class passwordValidated appears
+                'border-danger': this.password.length > 2 ? false : true,
+                'border-ok': this.password.length > 2 ? true : false
 
             }
         },
-        classInputNameObject(){ 
-                let char_SET = 2
-                if(this.username.length > char_SET){
-                    return {
-                        CharLenError : false,
-                        'border-danger' : false,
-                        'border-ok': true
-                    }
-                }else{
-                    return {
-                        CharLenError : true,
-                        'border-danger' : true,
-                        'border-ok': false
-                    }
+        classInputNameObject() {
+            let char_SET = 2
+            if (this.username.length > char_SET) {
+                return {
+                    CharLenError: false,
+                    'border-danger': false,
+                    'border-ok': true
                 }
-                // CharLenError : this.username.length > 2 ? false : true,
+            } else {
+                return {
+                    CharLenError: true,
+                    'border-danger': true,
+                    'border-ok': false
+                }
+            }
+            // CharLenError : this.username.length > 2 ? false : true,
         }
     }
 }
 </script>
 <style>
-.login-container{
+body {
+    min-width: 370px;
+}
+
+.login-container {
     margin: auto;
     max-width: 70%;
 }
-h1{
+
+h1 {
     text-align: center;
 }
-.form{
+
+.form {
     display: flex;
     flex-direction: column;
     /* max-width: 25%; */
@@ -224,19 +224,36 @@ h1{
     /* margin: auto; */
     align-content: center;
 }
-.input{
-    width: 100%;
-    /* height: 2rem; */
+.inputWrapper{
     margin-top: 2%;
     margin-bottom: 2%;
+}
+.input {
+    width: 100%;
+    /* height: 2rem; */
     position: relative;
     text-align: center;
     font-size: 1.2em;
     letter-spacing: 2px;
     border: 2px solid var(--vt-c-indigo);
-    outline:none;
+    outline: none;
 }
-.loginSubmitBtn{
+
+.inputEyeIcon {
+    position: absolute;
+    margin-top: 5px;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+    right: 5px;
+}
+.inputEyeShow{
+    background-image: url(../assets/visibility_FILL1_wght300_GRAD0_opsz24.svg);
+}
+.inputEyeNoShow{
+    background-image: url(../assets/visibility_off_FILL1_wght300_GRAD0_opsz24.svg);
+}
+.loginSubmitBtn {
     margin-top: 2rem;
     max-width: 10rem;
     font-size: large;
@@ -244,29 +261,36 @@ h1{
     margin: 0rem auto;
     padding: 1rem;
 }
-.loginSubmitBtnDanger{
+
+.loginSubmitBtnDanger {
     border-style: dashed;
     cursor: not-allowed;
 }
-.loginSubmitBtnOk{
+
+.loginSubmitBtnOk {
     border-style: solid;
-    cursor:pointer;
+    cursor: pointer;
 }
+
 .input:focus {
     background-color: var(--vt-c-text-dark-2);
     /* border: 2px solid red; */
 }
-.text-danger{
+
+.text-danger {
     /* color: red; */
 }
-.border-danger{
+
+.border-danger {
     border-color: var(--vt-c-redborder-1);
 }
-.border-ok{
+
+.border-ok {
     border-color: var(--vt-c-greenborder-1);
 }
+
 /* HINT MODALS */
-.usernameModal{
+.usernameModal {
     /* position: absolute;
     top: 1rem;
     right: 1rem; */
@@ -274,17 +298,21 @@ h1{
     visibility: hidden;
     /* font-size: small; */
 }
-.input[name="username"]:focus ~ .usernameModal{
-    visibility:visible;
+
+.input[name="username"]:focus~.usernameModal {
+    visibility: visible;
 }
-.passwordModal{
+
+.passwordModal {
     visibility: hidden;
     /* font-size: small; */
 }
-.input[name="password"]:focus ~ .passwordModal{
-    visibility:visible;
+
+.input[name="password"]:focus~.passwordModal {
+    visibility: visible;
 }
-.btnPass{
+
+.btnPass {
     width: 8rem;
     margin-left: auto;
 }
