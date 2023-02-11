@@ -1,6 +1,6 @@
 <template>
     <div class="login-container">
-        <h1>Login</h1>
+        <h1>{{ header || 'Login' }}</h1>
         <form class="form" @submit.prevent="login" autocomplete="on">
             <label for="inputName">Username</label>
             <input 
@@ -29,15 +29,15 @@
                 required
                 autocomplete="off"
                 >
-            <button type="button" class="btn btnPass" @click="togglePasswordText">show password</button>
+            <button type="button" class="btn btnPass" @click="togglePasswordText">{{pwdToggle}} password</button>
             <span class="passwordModal">{{ password_hint_message }}</span>
             <span class="passwordModal">{{ password_hint_message }}</span>
             <span class="passwordModal">{{ password_hint_message }}</span>
 
-            <!-- submit button cant have type="button" ?!! -->
+            <!-- submit button cant have type="button" but it should have type="submit" ?!! -->
             <button 
                 class="btn loginSubmitBtn" 
-                :class="[isValidated? 'loginSubmitBtnOk' : 'loginSubmitBtnDanger']"
+                :class="[isValidated ? 'loginSubmitBtnOk' : 'loginSubmitBtnDanger']"
                 @click="warn('Form is being submitted!', $event)"
                 >Submit
             </button>
@@ -46,7 +46,6 @@
         <button @click="fillInputfields" class="btn">Fill fields</button>
         <button @click="clearInputfields" class="btn">Clear fields</button>
 
-
     </div>
 </template>
 
@@ -54,11 +53,13 @@
 export default {
     data() {
         return {
+            header: 'LOGIN',
             username: '',
             password: '',
             isValidated: false,     //modifies the style of the submit button
             hasError: true,         //true == there is a class 'text-danger' defined in element rendered
             togglePasswordType: 'password',
+            pwdToggle: 'show',
             classInputNameObject:{
                 charLenError : true,
                 'border-danger': true,         //default:true == red colored border
@@ -77,9 +78,13 @@ export default {
     },
     methods: {
         togglePasswordText(){
+            this.togglePasswordType == 'text' ? this.pwdToggle = 'show' : this.pwdToggle = 'hide'
             this.togglePasswordType == 'text' ? this.togglePasswordType = 'password' : this.togglePasswordType = 'text'
         },
-        login() {
+        login(event) {
+            //TEST OF EVENT ON SUBMIT
+            console.log(event)
+
             // Auth user against the API -> TODO
             // POST request using fetch with error handling
           //  const requestOptions = {
@@ -102,12 +107,12 @@ export default {
             //VALIDATION
 
                 if(this.formValidation()){
-                    
+
                     window.user = this.username;
                     const redirectPath = this.$route.query.redirect || '/protected';
                     this.$router.push(redirectPath);
                 }else{
-                    console.error('You sucker!')
+                    alert('Form validation - fail, you shouldnt see this!')
                 }
 
              //   })
@@ -119,8 +124,11 @@ export default {
 
         },
         formValidation(){
-            if(this.username.length > 0 && this.password.length > 0){
+            if(this.username.length > 2 && this.password.length > 2){
                 console.info("Correct - Username and password are not empty.")
+                //SUBMIT BUTTON STYLE CHANGE
+                this.isValidated = true;
+                
                 return true
             }else{
                 console.info("Incorrectly filled form!")
@@ -233,12 +241,12 @@ h1{
     max-width: 10rem;
     font-size: large;
     /* text-align: center; */
-    margin: 2rem auto;
+    margin: 0rem auto;
     padding: 1rem;
 }
 .loginSubmitBtnDanger{
     border-style: dashed;
-    cursor: none;
+    cursor: not-allowed;
 }
 .loginSubmitBtnOk{
     border-style: solid;

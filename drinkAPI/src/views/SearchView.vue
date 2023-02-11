@@ -97,7 +97,7 @@ export default {
     background-position: 2px 4px;
     background-repeat: no-repeat;
 }
-input[type=text]:focus {
+input[type=search]:focus {
     background-color: var(--vt-c-text-dark-2);
 }
 .search-bar-tooltip{
@@ -112,6 +112,7 @@ input[type=text]:focus {
     top: 100%;
     margin-left: -5px;
     left: 50%;
+    padding:0.3rem;
 }
 .search-bar:hover .search-bar-tooltip{
     visibility: visible;
