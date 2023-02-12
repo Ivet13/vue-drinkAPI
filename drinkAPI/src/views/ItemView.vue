@@ -11,7 +11,6 @@
 
                     <p>Category:</p>
                     <p>{{ item.strCategory }}</p>
-                    <p>{{ item.strInstructions }}</p>
 
                     <p>Glass:</p>
                     <p>{{ item.strGlass }}</p>
