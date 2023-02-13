@@ -18,12 +18,10 @@
                     :class="classInputPasswordObject" placeholder="Enter password" id="inputPassword" required
                     autocomplete="off" oninvalid="this.setCustomValidity('Enter password, this field is required.')">
                 <i class="inputEyeIcon" :class="inputIconToggle" @click="togglePasswordText"></i>
+            <span class="passwordModal modalBlock">{{ password_hint_message }}</span>
+            <span class="passwordModal modalBlock">{{ password_hint_message }}</span>
+            <span class="passwordModal modalBlock">{{ password_hint_message }}</span>
             </div>
-            <button type="button" class="btn btnPass" @click="togglePasswordText">{{ pwdToggle }} password</button>
-            <span class="passwordModal">{{ password_hint_message }}</span>
-            <span class="passwordModal">{{ password_hint_message }}</span>
-            <span class="passwordModal">{{ password_hint_message }}</span>
-
 
             <!-- submit button cant have type="button" but it should have type="submit" ?!! -->
             <button class="btn loginSubmitBtn" :class="[isValidated ? 'loginSubmitBtnOk' : 'loginSubmitBtnDanger']"
@@ -62,7 +60,8 @@ export default {
             styleObject: {
                 color: 'red'
             },
-            inputIconToggle: 'inputEyeNoShow'
+            inputIconToggle: 'inputEyeNoShow',
+            errors:[]                       //errors storage?
         }
     },
     methods: {
@@ -77,6 +76,10 @@ export default {
             const { username, password } = Object.fromEntries(new FormData(event.target))
             console.log('username captured: ' + username + ' password captured : ' + password)
             //END TEST 
+
+            //PREVENT DEFAULT
+            event.preventDefault()
+
 
             // Auth user against the API -> TODO
             // POST request using fetch with error handling
@@ -100,7 +103,7 @@ export default {
             //VALIDATION
 
             if (this.formValidation()) {
-                //dummy authorization
+                //dummy authorization with window.user
                 window.user = this.username;
 
                 const redirectPath = this.$route.query.redirect || '/protected';
@@ -118,6 +121,9 @@ export default {
 
         },
         formValidation() {
+            //clear previous error messages
+            // this.errors = []
+
             if (this.username.length > 2 && this.password.length > 2) {
                 console.info("Correct - Username and password are not empty.")
                 //SUBMIT BUTTON STYLE CHANGE
@@ -126,6 +132,12 @@ export default {
                 return true
             } else {
                 console.info("Incorrectly filled form!")
+                // if(!this.username){
+                //     this.errors.push("name is required")
+                // }
+                // if(!this.password){
+                //     this.errors.push("password is required")
+                // }
                 return false
             }
         },
@@ -290,6 +302,9 @@ h1 {
 }
 
 /* HINT MODALS */
+.modalBlock{
+    display:block
+}
 .usernameModal {
     /* position: absolute;
     top: 1rem;
