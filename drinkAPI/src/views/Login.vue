@@ -2,7 +2,7 @@
     <div class="login-container">
         <h1>{{ header || 'Login' }}</h1>
         <form class="form" @submit.prevent="login" autocomplete="on">
-            <label for="inputName">Username</label>
+            <label for="inputName">Username <span class="askerisk">*</span></label>
             <input v-model="username" name="username" type="text" class="input"
                 :class="{ validated: isValidated, 'text-danger': hasError }, classInputNameObject"
                 placeholder="Enter your name" id="inputName" required autofocus
@@ -12,7 +12,7 @@
             }}</span>
             <span class="usernameModal" v-else>filled correctly</span>
 
-            <label for="inputPassword">Password</label>
+            <label for="inputPassword">Password <span class="askerisk">*</span></label>
             <div class="inputWrapper">
                 <input v-model="password" name="password" :type="togglePasswordType" class="input"
                     :class="classInputPasswordObject" placeholder="Enter password" id="inputPassword" required
@@ -100,8 +100,7 @@ export default {
             //        return Promise.reject(error);
             //     }
 
-            //VALIDATION
-
+            //PRE-SUBMIT VALIDATION
             if (this.formValidation()) {
                 //dummy authorization with window.user
                 window.user = this.username;
@@ -109,7 +108,8 @@ export default {
                 const redirectPath = this.$route.query.redirect || '/protected';
                 this.$router.push(redirectPath);
             } else {
-                alert('Form validation - fail, you shouldnt see this!')
+                alert('Form validation failed, you shouldnt see this!')
+
             }
 
             //   })
@@ -126,9 +126,14 @@ export default {
 
             if (this.username.length > 2 && this.password.length > 2) {
                 console.info("Correct - Username and password are not empty.")
+
+
+
+
                 //SUBMIT BUTTON STYLE CHANGE
                 this.isValidated = true;
 
+                //all is good -> true
                 return true
             } else {
                 console.info("Incorrectly filled form!")
@@ -169,7 +174,9 @@ export default {
             return this.username.length > chars_SET ? "correct" : "too few characters";
             // return this.username.length > chars_SET ? this.validateNameLength(true) : "too few characters";
         },
+        //REAL-TIME BROWSER FIELD VALIDATION
         password_hint_message() {
+
             return "TODO"
         },
         //computed setter - nefunguje zatial reaktivity!!
