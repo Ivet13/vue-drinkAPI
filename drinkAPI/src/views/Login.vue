@@ -18,9 +18,9 @@
                     :class="classInputPasswordObject" placeholder="Enter password" id="inputPassword" required
                     autocomplete="off" oninvalid="this.setCustomValidity('Enter password, this field is required.')">
                 <i class="inputEyeIcon" :class="inputIconToggle" @click="togglePasswordText"></i>
-            <span class="passwordModal modalBlock">{{ password_hint_message }}</span>
-            <span class="passwordModal modalBlock">{{ password_hint_message }}</span>
-            <span class="passwordModal modalBlock">{{ password_hint_message }}</span>
+                <span class="passwordModal modalBlock">{{ password_hint_message1 }}</span>
+                <span class="passwordModal modalBlock">{{ password_hint_message2 }}</span>
+                <span class="passwordModal modalBlock">{{ password_hint_message3 }}</span>
             </div>
 
             <!-- submit button cant have type="button" but it should have type="submit" ?!! -->
@@ -49,28 +49,33 @@ export default {
             classInputNameObject: {
                 charLenError: true,
                 'border-danger': true,         //default:true == red colored border
-                'border-ok': false              //default false
+                'border-ok': false,              //default false
+                
             },
             //these values can be put together into 1 class and that class bound to the element >
             classInputPasswordObject: {
                 passwordValidated: false,
                 'border-danger': true,         //default:true == red colored border
-                'border-ok': false              //default false
+                'border-ok': false,             //default false
+                passwordCondition1: false,      //length of the password input 
+                passwordCondition2: false,      //contains capital letter
+                passwordCondition3: false,      //contains digit
             },
             styleObject: {
                 color: 'red'
             },
             inputIconToggle: 'inputEyeNoShow',
-            errors:[]                       //errors storage?
+            errors: [],                       //errors storage?
         }
     },
     methods: {
         togglePasswordText() {
+            //Toggles the appearance of the Password input field icon and displays the text to be readable
             this.togglePasswordType == 'text' ? this.inputIconToggle = 'inputEyeNoShow' : this.inputIconToggle = 'inputEyeShow'
             this.togglePasswordType == 'text' ? this.togglePasswordType = 'password' : this.togglePasswordType = 'text'
         },
         login(event) {
-            //TEST OF EVENT ON SUBMIT
+            //TEST OF EVENT ON SUBMIT - reads the data from submit event to the console log
             console.log(event)
             //username != this.username, but captured username from event
             const { username, password } = Object.fromEntries(new FormData(event.target))
@@ -124,11 +129,8 @@ export default {
             //clear previous error messages
             // this.errors = []
 
-            if (this.username.length > 2 && this.password.length > 2) {
+            if (this.username.length > 2 && this.passwordValidated) {
                 console.info("Correct - Username and password are not empty.")
-
-
-
 
                 //SUBMIT BUTTON STYLE CHANGE
                 this.isValidated = true;
@@ -148,7 +150,7 @@ export default {
         },
         fillInputfields() {
             this.username = "tibor"
-            this.password = "random_password"
+            this.password = "Random_password1"
             // document.getElementById("inputName").value = "Tibor";
             // document.getElementById("inputPassword").value = "Random_Password";
         },
@@ -165,6 +167,15 @@ export default {
                 console.warn(message)
             }
             //alert(message)
+        },
+        setPassCondition1(value) {
+            return this.classInputPasswordObject.passwordCondition1 = value
+        },
+        setPassCondition2(value) {
+            return this.classInputPasswordObject.passwordCondition2 = value
+        },
+        setPassCondition3(value) {
+            return this.classInputPasswordObject.passwordCondition3 = value
         }
     },
     computed: {
@@ -174,10 +185,55 @@ export default {
             return this.username.length > chars_SET ? "correct" : "too few characters";
             // return this.username.length > chars_SET ? this.validateNameLength(true) : "too few characters";
         },
+        passwordRulesFullfilled(){
+        //RESOLVED IF ALL THE RULES FOR THE PASSWORD FIELDS ARE FULLFILED OR NOT
+            if(this.classInputPasswordObject.passwordCondition1 && this.classInputPasswordObject.passwordCondition2 && this.classInputPasswordObject.passwordCondition3){
+                this.passwordValidated = true
+                //console.info("password validated:" + this.passwordValidated)
+            }else{
+                this.passwordValidated = false
+                //console.info("password validated:" + this.passwordValidated)
+            } 
+        },
         //REAL-TIME BROWSER FIELD VALIDATION
-        password_hint_message() {
-
-            return "TODO"
+        password_hint_message1() {
+            //CHECKS FOR PASSWORD LENGTH
+            let char_SET = 3;
+            if (this.password.length > char_SET) {
+                this.setPassCondition1(true)
+                //console.log("password condition 1 (enough chars):" + this.classInputPasswordObject.passwordCondition1)
+                return "Password has enough characters"
+            } else {
+                this.setPassCondition1(false)
+                //console.log("password condition 1 (enough chars):" + this.classInputPasswordObject.passwordCondition1)
+                return "Password is too short-needs to be at least 4 characters long"
+            }
+        },
+        password_hint_message2() {
+            //CHECKS IF PASSWORD CONTAINS CAPITAL LETTER
+            const regexCapital = /[A-Z]/g;
+            if (regexCapital.test(this.password)) {
+                this.setPassCondition2(true)
+                //console.log("password condition 2 (Capital letter):" + this.classInputPasswordObject.passwordCondition2)
+                return "Password has a Capital letter"
+            } else {
+                this.setPassCondition2(false)
+                //console.log("password condition 2 (Capital letter)" + this.classInputPasswordObject.passwordCondition2)
+                return "Password hasnt a Capital letter"
+            }
+        },
+        password_hint_message3() {
+            //CHECKS IF PASSWORD CONTAINS DIGIT
+            const regexCapital = /\d/g;
+            if (regexCapital.test(this.password)) {
+                this.setPassCondition3(true)
+                //console.log("password condition 3 (digit):" + this.classInputPasswordObject.passwordCondition3)
+                return "Password has a digit"
+            } else {
+                this.setPassCondition3(false)
+                //console.log("password condition 3 (digit)" + this.classInputPasswordObject.passwordCondition3)
+                return "Password hasnt a digit"
+            }
         },
         //computed setter - nefunguje zatial reaktivity!!
         validateNameLength() {
@@ -194,9 +250,9 @@ export default {
         //computed property that returns an object, without this, the bound data won't appear in classes
         classInputPasswordObject() {
             return {
-                passwordValidated: false,      //true == class passwordValidated appears
-                'border-danger': this.password.length > 2 ? false : true,
-                'border-ok': this.password.length > 2 ? true : false
+                passwordValidated: this.passwordRulesFullfilled,    
+                'border-danger': this.passwordValidated ? false : true,
+                'border-ok': this.passwordValidated ? true : false
 
             }
         },
@@ -243,10 +299,12 @@ h1 {
     /* margin: auto; */
     align-content: center;
 }
-.inputWrapper{
+
+.inputWrapper {
     margin-top: 2%;
     margin-bottom: 2%;
 }
+
 .input {
     width: 100%;
     /* height: 2rem; */
@@ -266,12 +324,15 @@ h1 {
     height: 24px;
     right: 5px;
 }
-.inputEyeShow{
+
+.inputEyeShow {
     background-image: url(../assets/visibility_FILL1_wght300_GRAD0_opsz24.svg);
 }
-.inputEyeNoShow{
+
+.inputEyeNoShow {
     background-image: url(../assets/visibility_off_FILL1_wght300_GRAD0_opsz24.svg);
 }
+
 .loginSubmitBtn {
     margin-top: 2rem;
     max-width: 10rem;
@@ -309,9 +370,10 @@ h1 {
 }
 
 /* HINT MODALS */
-.modalBlock{
-    display:block
+.modalBlock {
+    display: block
 }
+
 .usernameModal {
     /* position: absolute;
     top: 1rem;
