@@ -1,7 +1,7 @@
 <template>
 
-    <GoBack />
-    <div>
+    <div class="mainSearchDrinkContainer">
+        <GoBack class="searchViewGoback"/>
         <div>
             <section class="search-container">
                 <h1>Search by drink title</h1>
@@ -185,5 +185,18 @@ input[type=search]:focus {
 
 .results-none-display {
     text-align: center;
+}
+.mainSearchDrinkContainer{
+    width: 90%;
+  margin: auto;
+  padding: 2rem;
+  margin-top: 17px;
+  margin-bottom: 5%;
+  box-shadow: 3px 3px 15px grey;
+}
+.searchViewGoback{
+    position: absolute;
+    top:0;
+    left: 0;
 }
 </style>

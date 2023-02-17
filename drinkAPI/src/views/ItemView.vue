@@ -3,7 +3,7 @@
         <section v-if="item" class="random-drink-container-detail">
             <h1>{{ item.strDrink }} - Detailed view</h1>
             <span v-if="IBA">International Bartenders Association Official Cocktail List !</span>
-            <!-- <GoBack /> -->
+            <GoBack class="itemViewGoBack"/>
             <div :class="`${alco} drink-detail-wrapper`">
 
                 <img class="img-detailed" :src="`${item.strDrinkThumb}`" :alt="item.strDrink">
@@ -34,7 +34,7 @@
 </template>
 
 <script>
-//import GoBack from '@/components/GoBack.vue';
+import GoBack from '@/components/GoBack.vue';
 export default {
     data() {
         return {
@@ -45,7 +45,7 @@ export default {
             ingredientsMeasurements: []
         }
     },
-    // components: { GoBack },
+    components: { GoBack },
     props: {
         id: { type: Number, required: true }
     },
@@ -167,5 +167,10 @@ export default {
     /* .random-drink-container{
         width: 95%;
     } */
+}
+.itemViewGoBack{
+    position: absolute;
+    top:0;
+    left: 0;
 }
 </style>

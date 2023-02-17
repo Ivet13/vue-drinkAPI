@@ -1,12 +1,13 @@
 <template>
     <div>
-        <section  class="search-container">
+        <section  class="list-search-container">
             <h1>List of drinks by alphabet</h1>
-            <GoBack />
+            <GoBack class="listViewGoBack"/>
             <div class="search-bar">
                         
                 <select name="input" @change="getData" v-model="input">
-                    <option value="A">A</option>
+                <optgroup label="Letters">
+                    <option value="A" selected>A</option>
                     <option value="B">B</option>
                     <option value="C">C</option>
                     <option value="D">D</option>
@@ -31,6 +32,8 @@
                     <option value="X">X</option>
                     <option value="Y">Y</option>
                     <option value="Z">Z</option>
+                </optgroup>
+                <optgroup label="numbers">
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -40,6 +43,7 @@
                     <option value="7">7</option>
                     <option value="8">8</option>
                     <option value="9">9</option>
+                </optgroup>
 
                 </select>
             </div>
@@ -78,6 +82,7 @@ export default {
     },
     methods: {
         async getData() {
+            //e.preventDefault()
             const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${this.input}`)
                 .then(async response => {
                     const data = await response.json();
@@ -112,10 +117,15 @@ export default {
 </script>
 
 <style>
-.search-container{
-    width:100%;
+.list-search-container{
+    /* width:100%; */
     margin:auto;
     text-align: center;
+    width: 50%;
+  padding: 2rem;
+  margin-top: 17px;
+  margin-bottom: 5%;
+  box-shadow: 3px 3px 15px grey;
 }
 .search-bar{
     width: 100%;
@@ -163,8 +173,18 @@ input[type=search]:focus {
     padding:5%;
     flex-direction: column;
     align-items: center;
+    font-size:larger;
 }
 .results-none-display{
     text-align: center;
+}
+select{
+    font-size: x-large;
+    text-align: center;
+}
+.listViewGoBack{
+    position: absolute;
+    top:0;
+    left: 0;
 }
 </style>
