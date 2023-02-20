@@ -5,8 +5,8 @@
             <label for="inputName">Username <span class="askerisk">*</span></label>
             <input v-model="username" name="username" type="text" class="input"
                 :class="{ validated: isValidated, 'text-danger': hasError }, classInputNameObject"
-                placeholder="Enter your name" id="inputName" required autofocus
-                oninvalid="this.setCustomValidity('Enter your name, this field is required.')">
+                placeholder="Enter your name" id="inputName" required autofocus>
+                <!-- oninvalid="this.setCustomValidity('Enter your name, this field is required.')" -->
             <span class="usernameModal" v-if="classInputNameObject.charLenError" :style="styleObject">{{
                 username_hint_message
             }}</span>
@@ -16,7 +16,7 @@
             <div class="inputWrapper">
                 <input v-model="password" name="password" :type="togglePasswordType" class="input"
                     :class="classInputPasswordObject" placeholder="Enter password" id="inputPassword" required
-                    autocomplete="off" oninvalid="this.setCustomValidity('Enter password, this field is required.')">
+                    autocomplete="off">
                 <i class="inputEyeIcon" :class="inputIconToggle" @click="togglePasswordText"></i>
                 <span class="passwordModal modalBlock">{{ password_hint_message1 }}</span>
                 <span class="passwordModal modalBlock">{{ password_hint_message2 }}</span>
@@ -24,7 +24,7 @@
             </div>
 
             <!-- submit button cant have type="button" but it should have type="submit" ?!! -->
-            <button class="btn loginSubmitBtn" :class="[isValidated ? 'loginSubmitBtnOk' : 'loginSubmitBtnDanger']"
+            <button class="btn loginSubmitBtn" :class='allFieldsValidated ? "loginSubmitBtnOk"  : "loginSubmitBtnDanger"'
                 @click="warn('Form is being submitted!', $event)">Submit
             </button>
         </form>
@@ -129,16 +129,14 @@ export default {
             //clear previous error messages
             // this.errors = []
 
-            if (this.username.length > 2 && this.passwordValidated) {
-                console.info("Correct - Username and password are not empty.")
-
+            if (this.username.length > 2 && this.classInputPasswordObject.passwordValidated) {
+                //console.info("Correct - Username and password are not empty.")
                 //SUBMIT BUTTON STYLE CHANGE
                 this.isValidated = true;
-
-                //all is good -> true
                 return true
             } else {
-                console.info("Incorrectly filled form!")
+                //console.info("Incorrectly filled form!")
+                
                 // if(!this.username){
                 //     this.errors.push("name is required")
                 // }
@@ -179,6 +177,15 @@ export default {
         }
     },
     computed: {
+        allFieldsValidated(){
+        //this needs to be dynamic - computed because of "isValidated" is needed to change submit button style
+        if(this.formValidation()){
+            return this.isValidated = true;
+        }else{
+            return this.isValidated = false;
+        }
+
+        },  
         //computed getters
         username_hint_message() {
             let chars_SET = 2;
@@ -188,25 +195,29 @@ export default {
         passwordRulesFullfilled(){
         //RESOLVED IF ALL THE RULES FOR THE PASSWORD FIELDS ARE FULLFILED OR NOT
             if(this.classInputPasswordObject.passwordCondition1 && this.classInputPasswordObject.passwordCondition2 && this.classInputPasswordObject.passwordCondition3){
-                this.passwordValidated = true
-                //console.info("password validated:" + this.passwordValidated)
+                this.classInputPasswordObject.passwordValidated = true
+                console.info("password validated:" + this.classInputPasswordObject.passwordValidated)
             }else{
-                this.passwordValidated = false
-                //console.info("password validated:" + this.passwordValidated)
+                this.classInputPasswordObject.passwordValidated = false
+                console.info("password validated:" + this.classInputPasswordObject.passwordValidated)
             } 
         },
         //REAL-TIME BROWSER FIELD VALIDATION
         password_hint_message1() {
             //CHECKS FOR PASSWORD LENGTH
-            let char_SET = 3;
-            if (this.password.length > char_SET) {
+            let char_min = 3;
+            let char_max = 20;
+            if (this.password.length > char_min) {
                 this.setPassCondition1(true)
                 //console.log("password condition 1 (enough chars):" + this.classInputPasswordObject.passwordCondition1)
-                return "Password has enough characters"
+                return "Password valid-has enough characters"
+            }else if(this.password.length > char_max){
+                this.setPassCondition1(false)
+                return "Password invalid-has too many characters"
             } else {
                 this.setPassCondition1(false)
                 //console.log("password condition 1 (enough chars):" + this.classInputPasswordObject.passwordCondition1)
-                return "Password is too short-needs to be at least 4 characters long"
+                return "Password invalid-is too short"
             }
         },
         password_hint_message2() {
@@ -215,11 +226,11 @@ export default {
             if (regexCapital.test(this.password)) {
                 this.setPassCondition2(true)
                 //console.log("password condition 2 (Capital letter):" + this.classInputPasswordObject.passwordCondition2)
-                return "Password has a Capital letter"
+                return "Password valid-contains a capital letter"
             } else {
                 this.setPassCondition2(false)
                 //console.log("password condition 2 (Capital letter)" + this.classInputPasswordObject.passwordCondition2)
-                return "Password hasnt a Capital letter"
+                return "Password invalid-doesnt contain a capital letter"
             }
         },
         password_hint_message3() {
@@ -228,11 +239,11 @@ export default {
             if (regexCapital.test(this.password)) {
                 this.setPassCondition3(true)
                 //console.log("password condition 3 (digit):" + this.classInputPasswordObject.passwordCondition3)
-                return "Password has a digit"
+                return "Password valid-contains a digit"
             } else {
                 this.setPassCondition3(false)
                 //console.log("password condition 3 (digit)" + this.classInputPasswordObject.passwordCondition3)
-                return "Password hasnt a digit"
+                return "Password invalid-doesnt contain a digit"
             }
         },
         //computed setter - nefunguje zatial reaktivity!!
@@ -251,8 +262,8 @@ export default {
         classInputPasswordObject() {
             return {
                 passwordValidated: this.passwordRulesFullfilled,    
-                'border-danger': this.passwordValidated ? false : true,
-                'border-ok': this.passwordValidated ? true : false
+                'border-danger': this.classInputPasswordObject.passwordValidated ? false : true,
+                'border-ok': this.classInputPasswordObject.passwordValidated ? true : false
 
             }
         },
