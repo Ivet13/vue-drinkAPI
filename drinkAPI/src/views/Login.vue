@@ -23,7 +23,7 @@
 
             <!-- submit button cant have type="button" but it should have type="submit" ?!! -->
             <button class="btn loginSubmitBtn" :class='allFieldsValidated ? "loginSubmitBtnOk"  : "loginSubmitBtnDanger"'
-                @click="warn('Form is being submitted!', $event)">Submit
+                @click="warn('Form is being submitted!', $event)" :disabled="isDisabled">Submit
             </button>
         </form>
         <!-- this button cannot be inside form, because it behaves as a submit button -->
@@ -44,6 +44,7 @@ export default {
             hasError: true,         //true == there is a class 'text-danger' defined in element rendered
             togglePasswordType: 'password',
             pwdToggle: 'show',
+            isDisabled: true,
             classInputNameObject: {
                 usernameValidated: false,       //WATCHER TEST - console log data
                 charLenError: true,             //to show hint correct/not correct
@@ -135,7 +136,7 @@ export default {
                 const redirectPath = this.$route.query.redirect || '/protected';
                 this.$router.push(redirectPath);
             } else {
-                alert('Form validation failed, you shouldnt see this!')
+                alert('Form validation failed, the form has errors!')
 
             }
 
@@ -206,8 +207,12 @@ export default {
         allFieldsValidated(){
         //this needs to be dynamic - computed because of "isValidated" is needed to change submit button style
         if(this.formValidation()){
-            return this.isValidated = true;
+            //the whole form is validated
+            this.isDisabled = false; //the submit button will be enabled
+            return this.isValidated = true; 
         }else{
+            //the whole form is not validated yet
+            this.isDisabled = true; //the submit button will remain disabled
             return this.isValidated = false;
         }
 
