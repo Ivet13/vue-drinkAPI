@@ -47,6 +47,7 @@ export default {
             togglePasswordType: 'password',
             pwdToggle: 'show',
             classInputNameObject: {
+                usernameValidated: false,       //TEST
                 charLenError: true,
                 'border-danger': true,         //default:true == red colored border
                 'border-ok': false,              //default false
@@ -66,6 +67,21 @@ export default {
             },
             inputIconToggle: 'inputEyeNoShow',
             errors: [],                       //errors storage?
+        }
+    },
+    watch:{
+        //WHENEVER USERNAME CHANGES, THIS FUNCTION SHOULD RUN
+        username(){
+            console.log("username : " + this.username)
+            const char_max = 10;
+            if (this.username.length > char_max) {
+                // this.hasError = false;
+                this.classInputNameObject['border-danger'] = true
+                this.classInputNameObject['border-ok'] = false
+            } else {
+                //this.hasError == true;
+                console.log(this.hasError)
+            }
         }
     },
     methods: {
@@ -174,8 +190,12 @@ export default {
         },
         setPassCondition3(value) {
             return this.classInputPasswordObject.passwordCondition3 = value
+        },
+        validateUsername(){
+
         }
     },
+    //PERFORMS A CALCULATION DEPENDING ON DATA
     computed: {
         allFieldsValidated(){
         //this needs to be dynamic - computed because of "isValidated" is needed to change submit button style
@@ -196,10 +216,10 @@ export default {
         //RESOLVED IF ALL THE RULES FOR THE PASSWORD FIELDS ARE FULLFILED OR NOT
             if(this.classInputPasswordObject.passwordCondition1 && this.classInputPasswordObject.passwordCondition2 && this.classInputPasswordObject.passwordCondition3){
                 this.classInputPasswordObject.passwordValidated = true
-                console.info("password validated:" + this.classInputPasswordObject.passwordValidated)
+                console.info("password validated ? :" + this.classInputPasswordObject.passwordValidated)
             }else{
                 this.classInputPasswordObject.passwordValidated = false
-                console.info("password validated:" + this.classInputPasswordObject.passwordValidated)
+                console.info("password validated ? :" + this.classInputPasswordObject.passwordValidated)
             } 
         },
         //REAL-TIME BROWSER FIELD VALIDATION
@@ -268,6 +288,7 @@ export default {
             }
         },
         classInputNameObject() {
+            //TODO - move condition to separate funtion (similar to password)
             let char_SET = 2
             if (this.username.length > char_SET) {
                 return {
