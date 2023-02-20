@@ -7,9 +7,7 @@
                 :class="{ validated: isValidated, 'text-danger': hasError }, classInputNameObject"
                 placeholder="Enter your name" id="inputName" required autofocus>
                 <!-- oninvalid="this.setCustomValidity('Enter your name, this field is required.')" -->
-            <span class="usernameModal" v-if="classInputNameObject.charLenError" :style="styleObject">{{
-                username_hint_message
-            }}</span>
+            <span class="usernameModal" v-if="this.classInputNameObject.charLenError" :style="styleObject">{{this.classInputNameObject.username_hint_message}}</span>
             <span class="usernameModal" v-else>filled correctly</span>
 
             <label for="inputPassword">Password <span class="askerisk">*</span></label>
@@ -47,11 +45,11 @@ export default {
             togglePasswordType: 'password',
             pwdToggle: 'show',
             classInputNameObject: {
-                usernameValidated: false,       //TEST
-                charLenError: true,
+                usernameValidated: false,       //WATCHER TEST - console log data
+                charLenError: true,             //to show hint correct/not correct
                 'border-danger': true,         //default:true == red colored border
-                'border-ok': false,              //default false
-                
+                'border-ok': false,            //default false
+                username_hint_message : ''
             },
             //these values can be put together into 1 class and that class bound to the element >
             classInputPasswordObject: {
@@ -63,24 +61,32 @@ export default {
                 passwordCondition3: false,      //contains digit
             },
             styleObject: {
-                color: 'red'
+                color: "red"
             },
             inputIconToggle: 'inputEyeNoShow',
             errors: [],                       //errors storage?
         }
     },
     watch:{
-        //WHENEVER USERNAME CHANGES, THIS FUNCTION SHOULD RUN
+        //WHENEVER USERNAME CHANGES, THIS FUNCTION SHOULD RUN, name of the "function" must be the same as v-binded prop
         username(){
-            console.log("username : " + this.username)
+            //console.log("username : " + this.username)
             const char_max = 10;
+            const char_min = 3;
             if (this.username.length > char_max) {
-                // this.hasError = false;
-                this.classInputNameObject['border-danger'] = true
-                this.classInputNameObject['border-ok'] = false
-            } else {
+                //this.hasError = false;
+                this.classInputNameObject.username_hint_message = 'Username invalid - too long.'
+                this.classInputNameObject.usernameValidated = false
+                //console.log("username invalid: it has more than 10 characters. Valid? :" + this.classInputNameObject.usernameValidated)
+            } else if(this.username.length < char_min){
                 //this.hasError == true;
-                console.log(this.hasError)
+                this.classInputNameObject.username_hint_message = 'Username invalid - too short.'
+                this.classInputNameObject.usernameValidated = false
+                //console.log("username invalid: it has less than 3 characters. Valid? :" + this.classInputNameObject.usernameValidated)
+            }else{
+                this.classInputNameObject.username_hint_message = 'Username valid.'
+                this.classInputNameObject.usernameValidated = true
+                //console.log("username valid. Valid? :" + this.classInputNameObject.usernameValidated)
             }
         }
     },
@@ -145,7 +151,7 @@ export default {
             //clear previous error messages
             // this.errors = []
 
-            if (this.username.length > 2 && this.classInputPasswordObject.passwordValidated) {
+            if (this.classInputNameObject.usernameValidated && this.classInputPasswordObject.passwordValidated) {
                 //console.info("Correct - Username and password are not empty.")
                 //SUBMIT BUTTON STYLE CHANGE
                 this.isValidated = true;
@@ -207,11 +213,11 @@ export default {
 
         },  
         //computed getters
-        username_hint_message() {
-            let chars_SET = 2;
-            return this.username.length > chars_SET ? "correct" : "too few characters";
-            // return this.username.length > chars_SET ? this.validateNameLength(true) : "too few characters";
-        },
+        // username_hint_message() {
+        //     let chars_SET = 2;
+        //     return this.username.length > chars_SET ? "correct" : "too few characters";
+        //     // return this.username.length > chars_SET ? this.validateNameLength(true) : "too few characters";
+        // },
         passwordRulesFullfilled(){
         //RESOLVED IF ALL THE RULES FOR THE PASSWORD FIELDS ARE FULLFILED OR NOT
             if(this.classInputPasswordObject.passwordCondition1 && this.classInputPasswordObject.passwordCondition2 && this.classInputPasswordObject.passwordCondition3){
