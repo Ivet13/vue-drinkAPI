@@ -2,15 +2,27 @@
     <div class="login-container">
         <h1>{{ header || 'Login' }}</h1>
         <form class="form" @submit.prevent="login" autocomplete="on">
-            <label for="inputName">Username <span class="askerisk">*</span></label>
+            <label for="inputName">Username <span class="asterisk">*</span></label>
             <input v-model="username" name="username" type="text" class="input"
                 :class="{ validated: isValidated, 'text-danger': hasError }, classInputNameObject"
                 placeholder="Enter your name" id="inputName" required autofocus>
-                <!-- oninvalid="this.setCustomValidity('Enter your name, this field is required.')" -->
-            <span class="usernameModal" v-if="this.classInputNameObject.charLenError" :style="styleObject">{{this.classInputNameObject.username_hint_message}}</span>
-            <span class="usernameModal" v-else>filled correctly</span>
+            <!-- oninvalid="this.setCustomValidity('Enter your name, this field is required.')" -->
+            <div class="usernameModal" v-if="!this.classInputNameObject.usernameValidated" :style="styleObject">
+                <ul>
+                    <li v-for="error of this.classInputNameObject.nameErrorMessage">
+                        {{ error }}
+                    </li>
+                </ul>
+            </div>
+            <div class="usernameModal" v-else>
+                <ul>
+                    <li>
+                        {{ this.classInputNameObject.nameCorrectMessage }}
+                    </li>
+                </ul>
+            </div>
 
-            <label for="inputPassword">Password <span class="askerisk">*</span></label>
+            <label for="inputPassword">Password <span class="asterisk">*</span></label>
             <div class="inputWrapper">
                 <input v-model="password" name="password" :type="togglePasswordType" class="input"
                     :class="classInputPasswordObject" placeholder="Enter password" id="inputPassword" required
@@ -22,7 +34,7 @@
             </div>
 
             <!-- submit button cant have type="button" but it should have type="submit" ?!! -->
-            <button class="btn loginSubmitBtn" :class='allFieldsValidated ? "loginSubmitBtnOk"  : "loginSubmitBtnDanger"'
+            <button class="btn loginSubmitBtn" :class='allFieldsValidated ? "loginSubmitBtnOk" : "loginSubmitBtnDanger"'
                 @click="warn('Form is being submitted!', $event)" :disabled="isDisabled">Submit
             </button>
         </form>
@@ -47,10 +59,11 @@ export default {
             isDisabled: true,
             classInputNameObject: {
                 usernameValidated: false,       //WATCHER TEST - console log data
-                charLenError: true,             //to show hint correct/not correct
+                //charLenError: true,             //to show hint correct/not correct
                 'border-danger': true,         //default:true == red colored border
                 'border-ok': false,            //default false
-                username_hint_message : ''
+                nameErrorMessage: [],
+                nameCorrectMessage: 'Username valid',
             },
             //these values can be put together into 1 class and that class bound to the element >
             classInputPasswordObject: {
@@ -68,27 +81,23 @@ export default {
             errors: [],                       //errors storage?
         }
     },
-    watch:{
+    watch: {
         //WHENEVER USERNAME CHANGES, THIS FUNCTION SHOULD RUN, name of the "function" must be the same as v-binded prop
-        username(){
-            //console.log("username : " + this.username)
-            const char_max = 10;
-            const char_min = 3;
-            if (this.username.length > char_max) {
-                //this.hasError = false;
-                this.classInputNameObject.username_hint_message = 'Username invalid - too long.'
-                this.classInputNameObject.usernameValidated = false
-                //console.log("username invalid: it has more than 10 characters. Valid? :" + this.classInputNameObject.usernameValidated)
-            } else if(this.username.length < char_min){
-                //this.hasError == true;
-                this.classInputNameObject.username_hint_message = 'Username invalid - too short.'
-                this.classInputNameObject.usernameValidated = false
-                //console.log("username invalid: it has less than 3 characters. Valid? :" + this.classInputNameObject.usernameValidated)
-            }else{
-                this.classInputNameObject.username_hint_message = 'Username valid.'
+        username() {
+            //clear all previous errors
+            this.classInputNameObject.nameErrorMessage = []
+            this.validateNameChars()
+            this.validateNameLength()
+            if(this.classInputNameObject.nameErrorMessage.length == 0){
+
                 this.classInputNameObject.usernameValidated = true
-                //console.log("username valid. Valid? :" + this.classInputNameObject.usernameValidated)
+                console.log("usernameValidated ? :" + this.classInputNameObject.usernameValidated)
+            }else{
+                this.classInputNameObject.usernameValidated = false
+                console.log(this.classInputNameObject.nameErrorMessage)
             }
+
+           
         }
     },
     methods: {
@@ -159,7 +168,7 @@ export default {
                 return true
             } else {
                 //console.info("Incorrectly filled form!")
-                
+
                 // if(!this.username){
                 //     this.errors.push("name is required")
                 // }
@@ -180,15 +189,15 @@ export default {
             this.password = ""
         },
         //EVENT HANDER TEST -- delete later
-        warn(message, event) {
-            //now we have access to the native event
-            if (event) {
-                // event.preventDefault()
+        // warn(message, event) {
+        //     //now we have access to the native event
+        //     if (event) {
+        //         // event.preventDefault()
 
-                console.warn(message)
-            }
-            //alert(message)
-        },
+        //         console.warn(message)
+        //     }
+        //     alert(message)
+        // },
         setPassCondition1(value) {
             return this.classInputPasswordObject.passwordCondition1 = value
         },
@@ -198,40 +207,66 @@ export default {
         setPassCondition3(value) {
             return this.classInputPasswordObject.passwordCondition3 = value
         },
-        validateUsername(){
-
-        }
+        validateNameLength() {
+            const char_max = 10;
+            const char_min = 3;
+            if (this.username.length > char_max) {
+                this.classInputNameObject.nameErrorMessage.push('Username invalid - too long')
+                // console.warn(this.classInputNameObject.nameErrorMessage)
+                //console.log("usernameValidated ? : " + this.classInputNameObject.usernameValidated)
+                //without calling the validateName chars it wont render other validations in the list-its not going to the respective functions
+                return false
+            } else if (this.username.length < char_min) {
+                this.classInputNameObject.nameErrorMessage.push('Username invalid - too short')
+                //console.log("usernameValidated ? : " + this.classInputNameObject.usernameValidated)
+                return false
+            } else {
+                return true
+            }
+        },
+        validateNameChars(){
+            const regexCapital = /[A-Z]/;
+            if (regexCapital.test(this.username.charAt(0))) {
+                // console.info("first character is capital")
+                return true
+            }else{
+                this.classInputNameObject.nameErrorMessage.push('First letter needs to be capital')
+                //this.validateNameLength() //calling the other validation, to run the condition in WATCHER completely..
+                // console.info("first letter is not capital")
+                return false
+            }
+        },
     },
     //PERFORMS A CALCULATION DEPENDING ON DATA
     computed: {
-        allFieldsValidated(){
-        //this needs to be dynamic - computed because of "isValidated" is needed to change submit button style
-        if(this.formValidation()){
-            //the whole form is validated
-            this.isDisabled = false; //the submit button will be enabled
-            return this.isValidated = true; 
-        }else{
-            //the whole form is not validated yet
-            this.isDisabled = true; //the submit button will remain disabled
-            return this.isValidated = false;
-        }
+        allFieldsValidated() {
+            //this needs to be dynamic - computed because of "isValidated" is needed to change submit button style
+            if (this.formValidation()) {
+                //the whole form is validated
+                this.isDisabled = false; //the submit button will be enabled
+                return this.isValidated = true;
+            } else {
+                //the whole form is not validated yet
+                this.isDisabled = true; //the submit button will remain disabled
+                return this.isValidated = false;
+            }
 
-        },  
+        },
         //computed getters
-        // username_hint_message() {
+        // nameErrorMessage() {
         //     let chars_SET = 2;
         //     return this.username.length > chars_SET ? "correct" : "too few characters";
         //     // return this.username.length > chars_SET ? this.validateNameLength(true) : "too few characters";
         // },
-        passwordRulesFullfilled(){
-        //RESOLVED IF ALL THE RULES FOR THE PASSWORD FIELDS ARE FULLFILED OR NOT
-            if(this.classInputPasswordObject.passwordCondition1 && this.classInputPasswordObject.passwordCondition2 && this.classInputPasswordObject.passwordCondition3){
+        passwordRulesFullfilled() {
+            //RESOLVED IF ALL THE RULES FOR THE PASSWORD FIELDS ARE FULLFILED OR NOT
+            if (this.classInputPasswordObject.passwordCondition1 && this.classInputPasswordObject.passwordCondition2 && this.classInputPasswordObject.passwordCondition3) {
                 this.classInputPasswordObject.passwordValidated = true
-                console.info("password validated ? :" + this.classInputPasswordObject.passwordValidated)
-            }else{
+                //console.info("password validated ? :" + this.classInputPasswordObject.passwordValidated)
+            } else {
                 this.classInputPasswordObject.passwordValidated = false
-                console.info("password validated ? :" + this.classInputPasswordObject.passwordValidated)
-            } 
+                //console.info("password validated ? :" + this.classInputPasswordObject.passwordValidated)
+            }
         },
         //REAL-TIME BROWSER FIELD VALIDATION
         password_hint_message1() {
@@ -242,7 +277,7 @@ export default {
                 this.setPassCondition1(true)
                 //console.log("password condition 1 (enough chars):" + this.classInputPasswordObject.passwordCondition1)
                 return "Password valid-has enough characters"
-            }else if(this.password.length > char_max){
+            } else if (this.password.length > char_max) {
                 this.setPassCondition1(false)
                 return "Password invalid-has too many characters"
             } else {
@@ -277,43 +312,37 @@ export default {
                 return "Password invalid-doesnt contain a digit"
             }
         },
-        //computed setter - nefunguje zatial reaktivity!!
-        validateNameLength() {
-            let char_SET = 2;
-            if (this.username.length > char_SET) {
-
-                this.hasError = false;
-                console.log(this.hasError)
-            } else {
-                this.hasError == true;
-                console.log(this.hasError)
-            }
-        },
         //computed property that returns an object, without this, the bound data won't appear in classes
         classInputPasswordObject() {
             return {
-                passwordValidated: this.passwordRulesFullfilled,    
+                passwordValidated: this.passwordRulesFullfilled,
                 'border-danger': this.classInputPasswordObject.passwordValidated ? false : true,
                 'border-ok': this.classInputPasswordObject.passwordValidated ? true : false
 
             }
         },
         classInputNameObject() {
-            //TODO - move condition to separate funtion (similar to password)
-            let char_SET = 2
-            if (this.username.length > char_SET) {
-                return {
-                    CharLenError: false,
-                    'border-danger': false,
-                    'border-ok': true
-                }
-            } else {
-                return {
-                    CharLenError: true,
-                    'border-danger': true,
-                    'border-ok': false
-                }
+            //console.log("error message array length : " + this.classInputNameObject.nameErrorMessage.length)
+            return {
+                usernameValidated: this.classInputNameObject.nameErrorMessage.length === 0 ? true : false,
+                'border-danger': this.classInputNameObject.usernameValidated ? false : true,
+                'border-ok': this.classInputNameObject.usernameValidated ? true : false
             }
+            //TODO - move condition to separate funtion (similar to password)
+            // let char_SET = 1
+            // if (this.username.length == char_SET) {
+            //     return {
+            //         //charLenError: false,
+            //         'border-danger': false,
+            //         'border-ok': true
+            //     }
+            // } else {
+            //     return {
+            //         //charLenError: true,
+            //         'border-danger': true,
+            //         'border-ok': false
+            //     }
+            // }
             // CharLenError : this.username.length > 2 ? false : true,
         }
     }
