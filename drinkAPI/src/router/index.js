@@ -70,7 +70,7 @@ const router = createRouter({
   //ROUTE RECORDS
   routes,
 });
-
+/* if you want to add login decomment this
 router.beforeEach((to, from) => {
   if (to.meta.requiresAuth && !window.user) {
     // needs to login if not already logged in
@@ -80,5 +80,5 @@ router.beforeEach((to, from) => {
     };
   }
 });
-
+*/
 export default router;
