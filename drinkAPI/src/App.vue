@@ -2,9 +2,6 @@
   <header>
     <div class="wrapper">
       <HeaderComponent msg="Drink API with Vue Project" />
-
-
-
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/random">Random</RouterLink>
