@@ -194,7 +194,5 @@ input[type=search]:focus {
   margin-bottom: 5%;
   box-shadow: 3px 3px 15px grey;
 }
-.go-back{
-    font-size:4rem;
-}
+
 </style>
