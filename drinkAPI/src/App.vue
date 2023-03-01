@@ -69,6 +69,16 @@ nav a:first-of-type {
   border: 0;
 }
 
+.container{
+  margin:auto;
+  text-align: center;
+  width: 50%;
+  padding: 2rem;
+  margin-top: 17px;
+  margin-bottom: 5%;
+  box-shadow: 3px 3px 15px grey;
+}
+
 @media (min-width: 1024px) {
   header {
     /* display: flex; */

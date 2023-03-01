@@ -1,6 +1,6 @@
 <template>
     <div>
-        <section  class="list-search-container">
+        <section  class="container">
             <h1>List of drinks by alphabet</h1>
             <GoBack/>
             <div class="search-bar">
@@ -49,8 +49,8 @@
             </div>
         </section>
 
-        <section v-if="items != null" class="results-container">
-            <p>Number of drinks found: {{ items.length }}</p>
+        <section v-if="items != null" class="results-container container">
+            <p>Number of found drinks: {{ items.length }}</p>
             <ul>
         <router-link 
         v-for="item in items" 
@@ -61,6 +61,8 @@
           <li>{{ item.strDrink }}</li>
      
         </router-link></ul>
+
+        
     </section>
     <p v-else class="results-none-display"> No results!</p>
 
@@ -117,16 +119,6 @@ export default {
 </script>
 
 <style>
-.list-search-container{
-    /* width:100%; */
-    margin:auto;
-    text-align: center;
-    width: 50%;
-  padding: 2rem;
-  margin-top: 17px;
-  margin-bottom: 5%;
-  box-shadow: 3px 3px 15px grey;
-}
 .search-bar{
     width: 100%;
     /* height: 2rem; */
@@ -175,11 +167,17 @@ input[type=search]:focus {
     align-items: center;
     font-size:larger;
 }
+
+.results-container > ul{
+  list-style: none;
+  text-align: left;
+  padding: 5%;
+}
 .results-none-display{
     text-align: center;
 }
 select{
-    font-size: x-large;
+    font-size: large;
     text-align: center;
 }
 

@@ -1,5 +1,5 @@
 <template>
-  <main class="home">
+  <main class="home container">
     <h1>Welcome to our madness!</h1>
     <p>Enjoy browsing for drinks, search for a specific drink or just get a random. It's all connected ... to the API,
       so drinks are being generated.</p>

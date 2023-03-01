@@ -1,6 +1,6 @@
 <template>
     <div>
-        <section v-if="item" class="random-drink-container-detail">
+        <section v-if="item" class="container">
             <h1>{{ item.strDrink }} - Detailed view</h1>
             <span v-if="IBA">International Bartenders' Association Official Cocktail List!</span>
             <GoBack/>
@@ -120,15 +120,8 @@ export default {
 .drink-detail-wrapper {
     display: flex;
     flex-wrap: wrap;
-}
-
-.random-drink-container-detail {
-    width: 90%;
-    margin: auto;
-    padding: 2rem;
-    margin-top: 17px;
-    margin-bottom: 5%;
-    box-shadow: 3px 3px 15px grey;
+    justify-content: center;
+    align-items: center;
 }
 
 .img-detailed {
