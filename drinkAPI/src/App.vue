@@ -6,7 +6,7 @@
 
 
       <nav>
-        <RouterLink to="/">Home</RouterLink>
+        <RouterLink to="/">Home?</RouterLink>
         <RouterLink to="/random">Random</RouterLink>
         <RouterLink to="/search">Search</RouterLink>
         <RouterLink to="/list">Drinks by alphabet!</RouterLink>
