@@ -3,7 +3,7 @@
         <section v-if="item" class="random-drink-container-detail">
             <h1>{{ item.strDrink }} - Detailed view</h1>
             <span v-if="IBA">International Bartenders' Association Official Cocktail List!</span>
-            <GoBack class="itemViewGoBack"/>
+            <GoBack/>
             <div :class="`${alco} drink-detail-wrapper`">
 
                 <img class="img-detailed" :src="`${item.strDrinkThumb}`" :alt="item.strDrink">
@@ -149,10 +149,5 @@ export default {
     /* .random-drink-container{
         width: 95%;
     } */
-}
-.itemViewGoBack{
-    position: absolute;
-    top:0;
-    left: 0;
 }
 </style>

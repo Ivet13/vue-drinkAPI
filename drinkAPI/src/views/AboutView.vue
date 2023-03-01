@@ -2,7 +2,7 @@
   <div>
 
     <main class="about-container">
-      <GoBack class="aboutViewGoBack"/>
+      <GoBack/>
       <h1>Who did this?</h1>
       <p>KK-Soft@2023</p>
     </main>
@@ -27,10 +27,5 @@ export default {
   margin-top: 17px;
   margin-bottom: 5%;
   box-shadow: 3px 3px 15px grey;
-}
-.aboutViewGoBack{
-    position: absolute;
-    top:0;
-    left: 0;
 }
 </style>

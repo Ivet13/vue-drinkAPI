@@ -2,7 +2,7 @@
     <div>
         <section  class="list-search-container">
             <h1>List of drinks by alphabet</h1>
-            <GoBack class="listViewGoBack"/>
+            <GoBack/>
             <div class="search-bar">
                         
                 <select name="input" @change="getData" v-model="input">
@@ -182,9 +182,5 @@ select{
     font-size: x-large;
     text-align: center;
 }
-.listViewGoBack{
-    position: absolute;
-    top:0;
-    left: 0;
-}
+
 </style>
