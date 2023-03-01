@@ -2,7 +2,7 @@
     <div>
         <section v-if="item" class="random-drink-container-detail">
             <h1>{{ item.strDrink }} - Detailed view</h1>
-            <span v-if="IBA">International Bartenders Association Official Cocktail List !</span>
+            <span v-if="IBA">International Bartenders' Association Official Cocktail List!</span>
             <GoBack class="itemViewGoBack"/>
             <div :class="`${alco} drink-detail-wrapper`">
 
@@ -85,24 +85,6 @@ export default {
 
                     this.ingredientsMeasurements = getParamsFromItem('measurements', 'strMeasure', this.item);
                     // console.log(this.ingredientsMeasurements);
-                    /*
-                                        function combineArrays(array1, array2) {
-                                            let combinedArray = [];
-                    
-                                            combinedArray['titles'] = [];
-                                            combinedArray['measurements'] = [];
-                    
-                                            for(let i=0;i < array1.length; i++){
-                                                
-                                                combinedArray['titles'].push(array1[i]);
-                                                combinedArray['measurements'].push(array2[i]);
-                                           
-                                        }
-                                            return combinedArray;
-                                        }
-                                        this.ingredients = combineArrays(this.ingredientsTitles, this.ingredientsMeasurements);
-                                        console.log(this.ingredients)
-                                      */
 
                 })
                 .catch(error => {

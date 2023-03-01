@@ -33,7 +33,7 @@
                     <option value="Y">Y</option>
                     <option value="Z">Z</option>
                 </optgroup>
-                <optgroup label="numbers">
+                <optgroup label="Numbers">
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
