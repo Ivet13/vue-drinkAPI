@@ -89,12 +89,11 @@ export default {
             this.validateNameChars()
             this.validateNameLength()
             if(this.classInputNameObject.nameErrorMessage.length == 0){
-
                 this.classInputNameObject.usernameValidated = true
-                console.log("usernameValidated ? :" + this.classInputNameObject.usernameValidated)
+                //console.log("usernameValidated ? :" + this.classInputNameObject.usernameValidated)
             }else{
                 this.classInputNameObject.usernameValidated = false
-                console.log(this.classInputNameObject.nameErrorMessage)
+                //console.log(this.classInputNameObject.nameErrorMessage)
             }
 
            
