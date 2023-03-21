@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <main class="container">
+    <main class="container w-80">
       <GoBack/>
       <h1>Who did this?</h1>
       <p>KK-Soft@2023</p>
@@ -17,7 +17,7 @@ export default {
 }
 </script>
 <style>
-.container{
+.w-80{
   width: 80%;
 }
 </style>
