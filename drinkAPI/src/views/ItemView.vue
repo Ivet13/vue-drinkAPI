@@ -1,6 +1,6 @@
 <template>
     <div>
-        <section v-if="item" class="container">
+        <section v-if="item" class="container randomDrinkDetail">
             <h1>{{ item.strDrink }} - Detailed view</h1>
             <span v-if="IBA">International Bartenders' Association Official Cocktail List!</span>
             <GoBack/>
@@ -132,6 +132,9 @@ export default {
 .drink-details-text-container {
     padding: 2%;
     width: 450px;
+}
+.randomDrinkDetail{
+    width: 90%;
 }
 
 @media (max-width: 1024px) {

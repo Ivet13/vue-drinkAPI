@@ -1,6 +1,6 @@
 <template>
     <div>
-        <section  class="container">
+        <section  class="container listSearch">
             <h1>List of drinks by alphabet</h1>
             <GoBack/>
             <div class="search-bar">
@@ -119,6 +119,9 @@ export default {
 </script>
 
 <style>
+.listSearch{
+    width: 50%;
+}
 .search-bar{
     width: 100%;
     /* height: 2rem; */
