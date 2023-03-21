@@ -178,7 +178,7 @@ export default {
             }
         },
         fillInputfields() {
-            this.username = "tibor"
+            this.username = "Tibor"
             this.password = "Random_password1"
             // document.getElementById("inputName").value = "Tibor";
             // document.getElementById("inputPassword").value = "Random_Password";

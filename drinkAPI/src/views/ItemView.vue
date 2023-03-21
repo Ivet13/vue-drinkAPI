@@ -1,9 +1,9 @@
 <template>
     <div>
-        <section v-if="item" class="random-drink-container-detail">
+        <section v-if="item" class="container">
             <h1>{{ item.strDrink }} - Detailed view</h1>
-            <span v-if="IBA">International Bartenders Association Official Cocktail List !</span>
-            <GoBack class="itemViewGoBack"/>
+            <span v-if="IBA">International Bartenders' Association Official Cocktail List!</span>
+            <GoBack/>
             <div :class="`${alco} drink-detail-wrapper`">
 
                 <img class="img-detailed" :src="`${item.strDrinkThumb}`" :alt="item.strDrink">
@@ -85,24 +85,6 @@ export default {
 
                     this.ingredientsMeasurements = getParamsFromItem('measurements', 'strMeasure', this.item);
                     // console.log(this.ingredientsMeasurements);
-                    /*
-                                        function combineArrays(array1, array2) {
-                                            let combinedArray = [];
-                    
-                                            combinedArray['titles'] = [];
-                                            combinedArray['measurements'] = [];
-                    
-                                            for(let i=0;i < array1.length; i++){
-                                                
-                                                combinedArray['titles'].push(array1[i]);
-                                                combinedArray['measurements'].push(array2[i]);
-                                           
-                                        }
-                                            return combinedArray;
-                                        }
-                                        this.ingredients = combineArrays(this.ingredientsTitles, this.ingredientsMeasurements);
-                                        console.log(this.ingredients)
-                                      */
 
                 })
                 .catch(error => {
@@ -138,15 +120,8 @@ export default {
 .drink-detail-wrapper {
     display: flex;
     flex-wrap: wrap;
-}
-
-.random-drink-container-detail {
-    width: 90%;
-    margin: auto;
-    padding: 2rem;
-    margin-top: 17px;
-    margin-bottom: 5%;
-    box-shadow: 3px 3px 15px grey;
+    justify-content: center;
+    align-items: center;
 }
 
 .img-detailed {
@@ -167,10 +142,5 @@ export default {
     /* .random-drink-container{
         width: 95%;
     } */
-}
-.itemViewGoBack{
-    position: absolute;
-    top:0;
-    left: 0;
 }
 </style>

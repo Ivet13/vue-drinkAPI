@@ -50,11 +50,15 @@ const routes = [
       requiresAuth: true,
     },
   },
-  ,
   {
     path: "/login",
     name: "login",
     component: () => import("../views/Login.vue"),
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    name: "NotFound",
+    component: () => import("../views/NotFound.vue"),
   },
 ];
 

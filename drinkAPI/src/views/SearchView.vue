@@ -1,13 +1,12 @@
 <template>
-
-    <div class="mainSearchDrinkContainer">
-        <GoBack class="searchViewGoback"/>
+    <div class="mainSearchDrinkContainer container">
+        <GoBack />
         <div>
             <section class="search-container">
                 <h1>Search by drink title</h1>
 
                 <div class="search-bar">
-                    <input id="" @keyup.enter="getData('s')" v-model="drinkInput" type="search" placeholder="Search..">
+                    <input id="" @keyup.enter="getData('s')" v-model="drinkInput" type="search" placeholder="Search...">
                     <span class="search-bar-tooltip">Type in name of the drink and hit enter.</span>
                 </div>
             </section>
@@ -30,8 +29,7 @@
                 <h1>Search by ingredient</h1>
 
                 <div class="search-bar">
-                    <input id="" @keyup.enter="getData('i')" v-model="ingredientInput" type="search"
-                        placeholder="Search..">
+                    <input id="" @keyup.enter="getData('i')" v-model="ingredientInput" type="search" placeholder="Search..">
                     <span class="search-bar-tooltip">Type in name of the ingredient and hit enter.</span>
                 </div>
             </section>
@@ -50,7 +48,6 @@
             <p v-else class="results-none-display"> No results!</p>
         </div>
     </div>
-
 </template>
 
 <script>
@@ -96,7 +93,7 @@ export default {
                     }
                     console.log('item found')
                     console.log(data)
-    
+
                     switch (type) {
                         case 's':
                             this.itemsDrinks = data.drinks;
@@ -186,17 +183,8 @@ input[type=search]:focus {
 .results-none-display {
     text-align: center;
 }
-.mainSearchDrinkContainer{
+
+.mainSearchDrinkContainer {
     width: 90%;
-  margin: auto;
-  padding: 2rem;
-  margin-top: 17px;
-  margin-bottom: 5%;
-  box-shadow: 3px 3px 15px grey;
-}
-.searchViewGoback{
-    position: absolute;
-    top:0;
-    left: 0;
 }
 </style>
