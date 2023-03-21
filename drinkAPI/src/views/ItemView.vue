@@ -9,13 +9,13 @@
                 <img class="img-detailed" :src="`${item.strDrinkThumb}`" :alt="item.strDrink">
                 <div class="drink-details-text-container">
 
-                    <p>Category:</p>
+                    <p class="underlined">Category:</p>
                     <p>{{ item.strCategory }}</p>
 
-                    <p>Glass:</p>
+                    <p class="underlined">Glass:</p>
                     <p>{{ item.strGlass }}</p>
 
-                    <p>Ingredients:</p>
+                    <p class="underlined">Ingredients:</p>
                     <ul v-if="ingredientsTitles && ingredientsTitles.length">
                         <li v-for="item of ingredientsTitles">{{ item }}:
                             {{ ingredientsMeasurements[ingredientsTitles.indexOf(item)]}}
@@ -137,7 +137,9 @@ export default {
 .randomDrinkDetail{
     width: 90%;
 }
-
+.underlined{
+    text-decoration: underline;
+}
 @media (max-width: 1024px) {
     .img-detailed {
         width: 100%;
