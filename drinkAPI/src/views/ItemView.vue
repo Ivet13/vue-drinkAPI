@@ -132,6 +132,7 @@ export default {
 .drink-details-text-container {
     padding: 2%;
     width: 450px;
+    text-align: initial;
 }
 .randomDrinkDetail{
     width: 90%;
