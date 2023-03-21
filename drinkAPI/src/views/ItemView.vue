@@ -22,7 +22,7 @@
                         </li>
                     </ul>
 
-                    <p>Instructions:</p>
+                    <p class="underlined"s>Instructions:</p>
                     <p>{{ item.strInstructions }}</p>
 
                 </div>
