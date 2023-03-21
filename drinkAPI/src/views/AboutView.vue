@@ -16,3 +16,8 @@ export default {
   components: {GoBack},
 }
 </script>
+<style>
+.container{
+  width: 80%;
+}
+</style>
