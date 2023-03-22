@@ -41,7 +41,6 @@ import HeaderComponent from './components/HeaderComponent.vue'
 header {
   line-height: 1.5;
   max-height: 100vh;
-  position: relative;
 }
 
 nav {
