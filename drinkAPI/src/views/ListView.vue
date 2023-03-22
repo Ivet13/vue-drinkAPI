@@ -171,7 +171,7 @@ export default {
     width: 80%;
 }
 
-.results-container > ul{
+.list-results-container > ul{
   list-style: none;
   text-align: left;
   padding: 5%;

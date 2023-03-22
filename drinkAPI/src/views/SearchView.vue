@@ -187,4 +187,8 @@ input[type=search]:focus {
 .mainSearchDrinkContainer {
     width: 90%;
 }
+/* ANDROID FOCUSED FIELD/KEYBOARD SHIFTS FIELDS */
+.scroll-content {
+    padding-bottom: 0 !important;
+ }
 </style>
