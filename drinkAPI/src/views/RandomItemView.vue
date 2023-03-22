@@ -82,7 +82,7 @@ img {
 }
 
 @media (max-width: 1024px) {
-  .random-drink-container {
+  .randomDrink {
     width: 90%;
   }
 
