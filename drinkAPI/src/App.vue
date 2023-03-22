@@ -34,9 +34,9 @@ import HeaderComponent from './components/HeaderComponent.vue'
 .wrapper {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
-  max-height: 100%;
+  /* max-height: 100%; */
 }
 
 header {
