@@ -191,7 +191,7 @@ input[type=search]:focus {
 /* .scroll-content {
     padding-bottom: 0 !important;
  } */
-body {
+body #app{
     position: relative;
 }
 </style>
