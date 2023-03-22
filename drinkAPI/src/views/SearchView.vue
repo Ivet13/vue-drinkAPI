@@ -162,9 +162,9 @@ input[type=search]:focus {
     background-color: var(--vt-c-black-soft);
     color: var(--vt-c-white-soft);
     border-radius: 9px;
-    width: 20%;
+    width: 50%;
     top: 100%;
-    margin-left: -5px;
+    margin-left: -25%;
     left: 50%;
     padding: 0.3rem;
 }
