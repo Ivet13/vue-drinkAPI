@@ -188,7 +188,7 @@ input[type=search]:focus {
     width: 90%;
 }
 /* ANDROID FOCUSED FIELD/KEYBOARD SHIFTS FIELDS */
-.scroll-content {
+/* .scroll-content {
     padding-bottom: 0 !important;
- }
+ } */
 </style>
