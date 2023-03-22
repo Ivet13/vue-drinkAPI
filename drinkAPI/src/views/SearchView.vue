@@ -181,6 +181,12 @@ input[type=search]:focus {
     justify-content: center;
 }
 
+.results-container ul{
+  list-style: none;
+  text-align: left;
+  padding: 5%;
+}
+
 .results-none-display {
     text-align: center;
 }
