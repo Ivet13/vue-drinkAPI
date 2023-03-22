@@ -45,7 +45,7 @@ header {
 
 nav {
   width: 100%;
-  font-size: 12px;
+  font-size: 1.4rem;
   text-align: center;
   margin-top: 2rem;
   margin-bottom: 2rem;

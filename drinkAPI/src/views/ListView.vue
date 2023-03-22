@@ -120,7 +120,7 @@ export default {
 
 <style>
 .listSearch{
-    width: 50%;
+    width: 80%;
 }
 .search-bar{
     width: 100%;
@@ -169,6 +169,7 @@ input[type=search]:focus {
     flex-direction: column;
     align-items: center;
     font-size:larger;
+    width: 80%;
 }
 
 .results-container > ul{
