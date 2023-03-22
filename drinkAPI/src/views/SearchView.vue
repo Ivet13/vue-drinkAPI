@@ -184,7 +184,7 @@ input[type=search]:focus {
 .results-container ul{
   list-style: none;
   text-align: left;
-  padding: 5%;
+  padding: 2%;
 }
 
 .results-none-display {
