@@ -80,6 +80,11 @@ nav a:first-of-type {
   box-shadow: 3px 3px 15px grey;
 }
 
+@media (max-width: 1024px) {
+  nav{
+    font-size: 1rem;
+  }
+}
 @media (min-width: 1024px) {
   header {
     /* display: flex; */
