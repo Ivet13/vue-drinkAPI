@@ -167,6 +167,7 @@ input[type=search]:focus {
     margin-left: -25%;
     left: 50%;
     padding: 0.3rem;
+    opacity: 0.5;
 }
 
 .search-bar:hover .search-bar-tooltip {
@@ -188,10 +189,7 @@ input[type=search]:focus {
     width: 90%;
 }
 /* ANDROID FOCUSED FIELD/KEYBOARD SHIFTS FIELDS */
-/* .scroll-content {
-    padding-bottom: 0 !important;
- } */
-body #app{
+/* body #app{
     position: relative;
-}
+} */
 </style>
