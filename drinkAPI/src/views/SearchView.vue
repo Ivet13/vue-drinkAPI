@@ -139,7 +139,7 @@ export default {
 }
 
 .search-bar input {
-    min-width: 50%;
+    max-width: 95%;
     font-size: 1.5em;
     font-stretch: expanded;
     text-align: center;
