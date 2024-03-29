@@ -68,12 +68,12 @@ img {
 }
 
 .randomDrink {
-  width: 50%;
+  width: 45%;
 }
 .random-drink-button {
   /* height: auto;
   width: 5rem; */
-  padding: 1rem;
+  padding: 0.3rem;
   font-size: large;
   font-weight: 900;
   border-radius: .5rem;
