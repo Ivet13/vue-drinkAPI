@@ -7,6 +7,7 @@
         <RouterLink to="/random">Random</RouterLink>
         <RouterLink to="/search">Search</RouterLink>
         <RouterLink to="/list">Let's do drinks by alphabet!</RouterLink>
+         <RouterLink to="/filter">I AM JESUS</RouterLink>
         <RouterLink to="/about">About</RouterLink>
       </nav>
     </div>
