@@ -52,4 +52,12 @@ props:{
   border-bottom:1px solid var(--vt-c-black-soft);
 }
 
+@media (max-width: 1024px) {
+  .title{
+    font-size: x-large;
+  }
+  .titleSubtext{
+    font-size: 1rem;
+  }
+}
 </style>

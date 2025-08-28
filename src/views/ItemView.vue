@@ -1,6 +1,6 @@
 <template>
     <div>
-        <section v-if="item" class="container">
+        <section v-if="item" class="container randomDrinkDetail">
             <h1>{{ item.strDrink }} - Detailed view</h1>
             <span v-if="IBA">International Bartenders' Association Official Cocktail List!</span>
             <GoBack/>
@@ -9,20 +9,20 @@
                 <img class="img-detailed" :src="`${item.strDrinkThumb}`" :alt="item.strDrink">
                 <div class="drink-details-text-container">
 
-                    <p>Category:</p>
+                    <p class="underlined">Category:</p>
                     <p>{{ item.strCategory }}</p>
 
-                    <p>Glass:</p>
+                    <p class="underlined">Glass:</p>
                     <p>{{ item.strGlass }}</p>
 
-                    <p>Ingredients:</p>
+                    <p class="underlined">Ingredients:</p>
                     <ul v-if="ingredientsTitles && ingredientsTitles.length">
                         <li v-for="item of ingredientsTitles">{{ item }}:
                             {{ ingredientsMeasurements[ingredientsTitles.indexOf(item)]}}
                         </li>
                     </ul>
 
-                    <p>Instructions:</p>
+                    <p class="underlined">Instructions:</p>
                     <p>{{ item.strInstructions }}</p>
 
                 </div>
@@ -132,8 +132,14 @@ export default {
 .drink-details-text-container {
     padding: 2%;
     width: 450px;
+    text-align: initial;
 }
-
+.randomDrinkDetail{
+    width: 90%;
+}
+.underlined{
+    text-decoration: underline;
+}
 @media (max-width: 1024px) {
     .img-detailed {
         width: 100%;

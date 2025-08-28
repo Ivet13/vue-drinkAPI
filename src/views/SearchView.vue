@@ -139,7 +139,7 @@ export default {
 }
 
 .search-bar input {
-    min-width: 50%;
+    max-width: 95%;
     font-size: 1.5em;
     font-stretch: expanded;
     text-align: center;
@@ -162,11 +162,12 @@ input[type=search]:focus {
     background-color: var(--vt-c-black-soft);
     color: var(--vt-c-white-soft);
     border-radius: 9px;
-    width: 20%;
+    width: 50%;
     top: 100%;
-    margin-left: -5px;
+    margin-left: -25%;
     left: 50%;
     padding: 0.3rem;
+    opacity: 0.5;
 }
 
 .search-bar:hover .search-bar-tooltip {
@@ -180,6 +181,12 @@ input[type=search]:focus {
     justify-content: center;
 }
 
+.results-container ul{
+  list-style: none;
+  text-align: left;
+  padding: 2%;
+}
+
 .results-none-display {
     text-align: center;
 }
@@ -187,4 +194,8 @@ input[type=search]:focus {
 .mainSearchDrinkContainer {
     width: 90%;
 }
+/* ANDROID FOCUSED FIELD/KEYBOARD SHIFTS FIELDS */
+/* body #app{
+    position: relative;
+} */
 </style>

@@ -4,7 +4,7 @@
 
       <button @click="initData()" class="green random-drink-button">Get me a random drink!</button>
     </div>
-    <div v-if="items != null" class="container">
+    <div v-if="items != null" class="container randomDrink">
       <router-link v-for="item in items" :key="item.idDrink"
         :to="{ name: 'item', params: { id: item.idDrink, slug: item.strDrink.replace(/\s+/g, '_') } }" class="">
         <h2>{{ item.strDrink }}</h2>
@@ -67,11 +67,13 @@ img {
   width: 100%;
 }
 
-
+.randomDrink {
+  width: 45%;
+}
 .random-drink-button {
   /* height: auto;
   width: 5rem; */
-  padding: 1rem;
+  padding: 0.3rem;
   font-size: large;
   font-weight: 900;
   border-radius: .5rem;
@@ -80,7 +82,7 @@ img {
 }
 
 @media (max-width: 1024px) {
-  .random-drink-container {
+  .randomDrink {
     width: 90%;
   }
 

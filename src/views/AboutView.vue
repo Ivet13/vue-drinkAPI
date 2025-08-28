@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <main class="container">
+    <main class="container aboutContainer">
       <GoBack/>
       <h1>Who did this?</h1>
       <p>KK-Soft@2023</p>
@@ -16,3 +16,8 @@ export default {
   components: {GoBack},
 }
 </script>
+<style>
+.aboutContainer{
+  width: 80%;
+}
+</style>

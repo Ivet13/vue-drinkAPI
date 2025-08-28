@@ -34,8 +34,9 @@ import HeaderComponent from './components/HeaderComponent.vue'
 .wrapper {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
+  /* max-height: 100%; */
 }
 
 header {
@@ -45,7 +46,7 @@ header {
 
 nav {
   width: 100%;
-  font-size: 12px;
+  font-size: 1.4rem;
   text-align: center;
   margin-top: 2rem;
   margin-bottom: 2rem;
@@ -79,6 +80,11 @@ nav a:first-of-type {
   box-shadow: 3px 3px 15px grey;
 }
 
+@media (max-width: 1024px) {
+  nav{
+    font-size: 1rem;
+  }
+}
 @media (min-width: 1024px) {
   header {
     /* display: flex; */

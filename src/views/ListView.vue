@@ -1,6 +1,6 @@
 <template>
     <div>
-        <section  class="container">
+        <section  class="container listSearch">
             <h1>List of drinks by alphabet</h1>
             <GoBack/>
             <div class="search-bar">
@@ -49,7 +49,7 @@
             </div>
         </section>
 
-        <section v-if="items != null" class="results-container container">
+        <section v-if="items != null" class="list-results-container container">
             <p>Number of found drinks: {{ items.length }}</p>
             <ul>
         <router-link 
@@ -119,14 +119,16 @@ export default {
 </script>
 
 <style>
-.search-bar{
+.listSearch{
+    width: 80%;
+}
+/* .search-bar{
     width: 100%;
-    /* height: 2rem; */
     margin-top: 2%;
     margin-bottom: 2%;
     position: relative;
-}
-.search-bar input{
+} */
+/* .search-bar input{
     min-width: 50%;
     font-size: 1.5em;
     font-stretch: expanded;
@@ -136,11 +138,11 @@ export default {
     background-image: url(../assets/search.svg);
     background-position: 2px 4px;
     background-repeat: no-repeat;
-}
-input[type=search]:focus {
+} */
+/* input[type=search]:focus {
     background-color: var(--vt-c-text-dark-2);
-}
-.search-bar-tooltip{
+} */
+/* .search-bar-tooltip{
     visibility: hidden;
     display: inline-block;
     z-index: 1;
@@ -148,27 +150,28 @@ input[type=search]:focus {
     background-color: var(--vt-c-black-soft);
     color: var(--vt-c-white-soft);
     border-radius: 9px;
-    width: 20%;
+    width: 50%;
     top: 100%;
-    margin-left: -5px;
+    margin-left: -25%;
     left: 50%;
     padding:0.3rem;
-}
-.search-bar:hover .search-bar-tooltip{
+} */
+/* .search-bar:hover .search-bar-tooltip{
     visibility: visible;
     position: absolute;
     z-index:1;
-}
-.results-container{
+} */
+.list-results-container{
     display: flex;
     justify-content: center;
     padding:5%;
     flex-direction: column;
     align-items: center;
     font-size:larger;
+    width: 80%;
 }
 
-.results-container > ul{
+.list-results-container ul{
   list-style: none;
   text-align: left;
   padding: 5%;
