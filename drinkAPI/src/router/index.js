@@ -42,6 +42,11 @@ const routes = [
     name: "list",
     component: () => import("../views/ListView.vue"),
   },
+    {
+    path: "/filter",
+    name: "filter",
+    component: () => import("../views/FilterView.vue"),
+  },
   {
     path: "/random",
     name: "random",
