@@ -3,14 +3,10 @@
         <section  class="container">
             <h1>Type</h1>
             <GoBack/>
-            <div class="search-bar">
-                        
-                <select name="input" @change="getData" v-model="input">
-                <optgroup label="Letters">
+            <div class="search-bar">                        
+                <select name="input" @change="getData" v-model="input">              
                     <option value="Alcoholic" selected>Alcoholic</option>
-                    <option value="Non_Alcoholic">Non Alcoholic</option>                  
-                </optgroup>       
-
+                    <option value="Non_Alcoholic">Non Alcoholic</option>          
                 </select>
             </div>
         </section>
